@@ -1,0 +1,7 @@
+{
+  "n_total": 26,
+  "n_successful": 24,
+  "mean_coverage": 0.22319661506522462,
+  "median_coverage": 0.2195488721804511,
+  "n_runs_per_case": 100
+}

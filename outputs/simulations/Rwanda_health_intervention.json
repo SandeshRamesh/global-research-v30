@@ -1,0 +1,34 @@
+{
+  "status": "success",
+  "country": "Rwanda",
+  "base_year": 2024,
+  "interventions": [
+    {
+      "indicator": "v2pehealth",
+      "baseline": 0.261,
+      "change_percent": 20,
+      "change_absolute": 0.0522,
+      "status": "applied"
+    }
+  ],
+  "propagation": {
+    "iterations": 1,
+    "converged": true
+  },
+  "effects": {
+    "total_affected": 1,
+    "top_effects": {
+      "v2pehealth": {
+        "baseline": 0.261,
+        "simulated": 0.31320000000000003,
+        "absolute_change": 0.052200000000000024,
+        "percent_change": 20.00000000000001
+      }
+    }
+  },
+  "metadata": {
+    "n_edges": 7368,
+    "n_edges_with_data": 6506,
+    "timestamp": "2025-12-29T15:55:07.740830"
+  }
+}

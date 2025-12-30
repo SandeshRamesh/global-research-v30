@@ -1,0 +1,242 @@
+[
+  {
+    "country": "India",
+    "indicator": "SLE.1T2.M",
+    "year": 2007,
+    "percent_change": 19.965302417815114,
+    "n_downstream": 45,
+    "outgoing_edges": 45
+  },
+  {
+    "country": "Thailand",
+    "indicator": "SLE.1T2.M",
+    "year": 2004,
+    "percent_change": 18.924340568542004,
+    "n_downstream": 45,
+    "outgoing_edges": 45
+  },
+  {
+    "country": "Mexico",
+    "indicator": "SLE.1T2.M",
+    "year": 2000,
+    "percent_change": 17.647058823529413,
+    "n_downstream": 45,
+    "outgoing_edges": 45
+  },
+  {
+    "country": "Thailand",
+    "indicator": "SLE.1T2.M",
+    "year": 2001,
+    "percent_change": 17.647058823529413,
+    "n_downstream": 45,
+    "outgoing_edges": 45
+  },
+  {
+    "country": "India",
+    "indicator": "SLE.1T2.M",
+    "year": 2000,
+    "percent_change": 17.647058823529406,
+    "n_downstream": 45,
+    "outgoing_edges": 45
+  },
+  {
+    "country": "Thailand",
+    "indicator": "SLE.1T2.M",
+    "year": 2021,
+    "percent_change": -15.887798071731964,
+    "n_downstream": 45,
+    "outgoing_edges": 45
+  },
+  {
+    "country": "Colombia",
+    "indicator": "SLE.1T2.M",
+    "year": 2004,
+    "percent_change": 19.09747525003104,
+    "n_downstream": 44,
+    "outgoing_edges": 44
+  },
+  {
+    "country": "Colombia",
+    "indicator": "SLE.1T2.M",
+    "year": 2000,
+    "percent_change": 17.647058823529406,
+    "n_downstream": 44,
+    "outgoing_edges": 44
+  },
+  {
+    "country": "Nigeria",
+    "indicator": "SLE.1T2.M",
+    "year": 2004,
+    "percent_change": 21.9279866193172,
+    "n_downstream": 43,
+    "outgoing_edges": 43
+  },
+  {
+    "country": "Nigeria",
+    "indicator": "SLE.1T2.M",
+    "year": 2020,
+    "percent_change": 18.861499543767472,
+    "n_downstream": 43,
+    "outgoing_edges": 43
+  },
+  {
+    "country": "Nigeria",
+    "indicator": "SLE.1T2.M",
+    "year": 2018,
+    "percent_change": 18.346673246957774,
+    "n_downstream": 43,
+    "outgoing_edges": 43
+  },
+  {
+    "country": "Indonesia",
+    "indicator": "SLE.1T2.M",
+    "year": 1999,
+    "percent_change": 18.29063540997241,
+    "n_downstream": 43,
+    "outgoing_edges": 43
+  },
+  {
+    "country": "Indonesia",
+    "indicator": "SLE.1T2.M",
+    "year": 1995,
+    "percent_change": 17.64705882352942,
+    "n_downstream": 43,
+    "outgoing_edges": 43
+  },
+  {
+    "country": "Nigeria",
+    "indicator": "SLE.1T2.M",
+    "year": 1999,
+    "percent_change": 17.647058823529417,
+    "n_downstream": 43,
+    "outgoing_edges": 43
+  },
+  {
+    "country": "Vietnam",
+    "indicator": "SLE.1T2.M",
+    "year": 1998,
+    "percent_change": 17.647058823529413,
+    "n_downstream": 43,
+    "outgoing_edges": 43
+  },
+  {
+    "country": "Nigeria",
+    "indicator": "SLE.1T2.M",
+    "year": 2015,
+    "percent_change": -17.62728976409438,
+    "n_downstream": 43,
+    "outgoing_edges": 43
+  },
+  {
+    "country": "Indonesia",
+    "indicator": "SLE.1T2.M",
+    "year": 2001,
+    "percent_change": 16.73768444076503,
+    "n_downstream": 43,
+    "outgoing_edges": 43
+  },
+  {
+    "country": "Vietnam",
+    "indicator": "SLE.1T2.M",
+    "year": 2008,
+    "percent_change": -16.23201921488594,
+    "n_downstream": 43,
+    "outgoing_edges": 43
+  },
+  {
+    "country": "Vietnam",
+    "indicator": "SLE.1T2.M",
+    "year": 2009,
+    "percent_change": 15.916762406128335,
+    "n_downstream": 43,
+    "outgoing_edges": 43
+  },
+  {
+    "country": "Indonesia",
+    "indicator": "SLE.1T2.M",
+    "year": 2019,
+    "percent_change": -15.748914862487409,
+    "n_downstream": 43,
+    "outgoing_edges": 43
+  },
+  {
+    "country": "Indonesia",
+    "indicator": "SLE.1T2.M",
+    "year": 2000,
+    "percent_change": -15.651983367283606,
+    "n_downstream": 43,
+    "outgoing_edges": 43
+  },
+  {
+    "country": "China",
+    "indicator": "SLE.1T2.M",
+    "year": 2006,
+    "percent_change": 19.85171115037568,
+    "n_downstream": 42,
+    "outgoing_edges": 42
+  },
+  {
+    "country": "China",
+    "indicator": "SLE.1T2.M",
+    "year": 2001,
+    "percent_change": 18.940303849297116,
+    "n_downstream": 42,
+    "outgoing_edges": 42
+  },
+  {
+    "country": "Philippines",
+    "indicator": "SLE.1T2.M",
+    "year": 2014,
+    "percent_change": 18.247268276963776,
+    "n_downstream": 42,
+    "outgoing_edges": 42
+  },
+  {
+    "country": "Philippines",
+    "indicator": "SLE.1T2.M",
+    "year": 1998,
+    "percent_change": 17.64705882352942,
+    "n_downstream": 42,
+    "outgoing_edges": 42
+  },
+  {
+    "country": "Spain",
+    "indicator": "SLE.1T2.M",
+    "year": 2000,
+    "percent_change": 17.647058823529417,
+    "n_downstream": 42,
+    "outgoing_edges": 42
+  },
+  {
+    "country": "China",
+    "indicator": "SLE.1T2.M",
+    "year": 1995,
+    "percent_change": 17.647058823529406,
+    "n_downstream": 42,
+    "outgoing_edges": 42
+  },
+  {
+    "country": "Philippines",
+    "indicator": "SLE.1T2.M",
+    "year": 2001,
+    "percent_change": 17.406610560525767,
+    "n_downstream": 42,
+    "outgoing_edges": 42
+  },
+  {
+    "country": "Philippines",
+    "indicator": "SLE.1T2.M",
+    "year": 2021,
+    "percent_change": -15.550052606920083,
+    "n_downstream": 42,
+    "outgoing_edges": 42
+  },
+  {
+    "country": "Philippines",
+    "indicator": "SLE.1T2.M",
+    "year": 2000,
+    "percent_change": -15.173369535588776,
+    "n_downstream": 42,
+    "outgoing_edges": 42
+  }
+]

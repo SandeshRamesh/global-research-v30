@@ -1,0 +1,33 @@
+{
+  "total_rows": 18296578,
+  "format": "long",
+  "n_countries": 893,
+  "countries_sample": [
+    "11",
+    "13",
+    "14",
+    "142",
+    "143",
+    "145",
+    "15",
+    "150",
+    "151",
+    "154"
+  ],
+  "year_range": [
+    1990,
+    2024
+  ],
+  "n_years": 35,
+  "n_indicators": 3122,
+  "mean_completeness": 1.0,
+  "countries_below_50pct": 0,
+  "duplicate_rows": 0,
+  "value_stats": {
+    "mean": 3206105372980.858,
+    "std": 399136784610201.6,
+    "min": -3.13467583257e+16,
+    "max": 1.97581475858706e+17,
+    "null_pct": 0.0
+  }
+}

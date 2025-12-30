@@ -1,0 +1,11 @@
+{
+  "n_total": 30,
+  "n_successful": 30,
+  "mean_r_squared": 0.1208783717499819,
+  "median_r_squared": 0.09379517331763321,
+  "std_r_squared": 0.1057930627485404,
+  "mean_pearson_r": 0.0251877117815897,
+  "mean_mae": 167.6706153466176,
+  "mean_rmse": 509.9650348199271,
+  "validation_passed": false
+}

@@ -1,0 +1,20 @@
+{
+  "n_total": 26,
+  "n_successful": 24,
+  "mean_r_squared": 0.035483890144349724,
+  "median_r_squared": 0.00265882231377693,
+  "std_r_squared": 0.07219474214253295,
+  "mean_pearson_r": 0.019430013760883446,
+  "mean_mae": 69.08001142082891,
+  "mean_rmse": 378.3621633971704,
+  "mean_direction_accuracy": 0.3662489194465352,
+  "median_direction_accuracy": 0.36013986013986016,
+  "mean_top_k_overlap": 0.08333333333333333,
+  "mean_magnitude_ratio": 0.2962455668135011,
+  "std_magnitude_ratio": 0.23710030217299935,
+  "r2_target_met": false,
+  "direction_target_met": false,
+  "top_k_target_met": false,
+  "magnitude_calibrated": false,
+  "validation_passed": false
+}

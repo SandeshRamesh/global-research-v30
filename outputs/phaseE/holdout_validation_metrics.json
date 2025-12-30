@@ -1,0 +1,9 @@
+{
+  "n_holdout_countries": 21,
+  "n_holdout_cases": 20,
+  "n_successful": 20,
+  "holdout_mean_r2": 0.14645336728106823,
+  "holdout_median_r2": 0.1360691677461233,
+  "in_sample_r2": 0.09093366031086399,
+  "status": "pass"
+}
