@@ -1,0 +1,110 @@
+{
+  "version": "v3.1.0",
+  "description": "Regional spillover proxy coefficients for V3.1. Real bilateral spillovers deferred to V3.2.",
+  "methodology": "Spillover strength based on regional economic integration levels (trade intensity, FDI flows, policy coordination). Regional leaders identified by GDP share and institutional influence.",
+  "regions": {
+    "east_asia_pacific": {
+      "name": "East Asia & Pacific",
+      "dominant_economy": "CHN",
+      "regional_leaders": ["CHN", "JPN", "KOR", "AUS"],
+      "spillover_strength": 0.45,
+      "rationale": "High trade integration, supply chain dependencies, coordinated monetary policies"
+    },
+    "europe_central_asia": {
+      "name": "Europe & Central Asia",
+      "dominant_economy": "DEU",
+      "regional_leaders": ["DEU", "FRA", "GBR", "RUS"],
+      "spillover_strength": 0.50,
+      "rationale": "EU single market, Eurozone monetary union, high labor mobility"
+    },
+    "latin_america_caribbean": {
+      "name": "Latin America & Caribbean",
+      "dominant_economy": "BRA",
+      "regional_leaders": ["BRA", "MEX", "ARG", "CHL"],
+      "spillover_strength": 0.30,
+      "rationale": "Mercosur/Pacific Alliance integration, commodity price linkages"
+    },
+    "middle_east_north_africa": {
+      "name": "Middle East & North Africa",
+      "dominant_economy": "SAU",
+      "regional_leaders": ["SAU", "ARE", "EGY", "TUR"],
+      "spillover_strength": 0.35,
+      "rationale": "Oil price coordination (OPEC), GCC integration, labor migration"
+    },
+    "north_america": {
+      "name": "North America",
+      "dominant_economy": "USA",
+      "regional_leaders": ["USA", "CAN", "MEX"],
+      "spillover_strength": 0.55,
+      "rationale": "USMCA deep integration, supply chains, financial market linkages"
+    },
+    "south_asia": {
+      "name": "South Asia",
+      "dominant_economy": "IND",
+      "regional_leaders": ["IND", "BGD", "PAK"],
+      "spillover_strength": 0.25,
+      "rationale": "Lower formal integration, but significant remittance and labor flows"
+    },
+    "sub_saharan_africa": {
+      "name": "Sub-Saharan Africa",
+      "dominant_economy": "ZAF",
+      "regional_leaders": ["ZAF", "NGA", "KEN", "ETH"],
+      "spillover_strength": 0.20,
+      "rationale": "Growing AfCFTA integration, but historically fragmented markets"
+    },
+    "western_europe": {
+      "name": "Western Europe",
+      "dominant_economy": "DEU",
+      "regional_leaders": ["DEU", "FRA", "GBR", "ITA", "ESP"],
+      "spillover_strength": 0.55,
+      "rationale": "EU/EEA deep integration, Eurozone, Schengen labor mobility"
+    },
+    "eastern_europe": {
+      "name": "Eastern Europe",
+      "dominant_economy": "POL",
+      "regional_leaders": ["POL", "CZE", "ROU", "HUN"],
+      "spillover_strength": 0.40,
+      "rationale": "EU integration, German supply chain dependencies"
+    },
+    "central_asia": {
+      "name": "Central Asia",
+      "dominant_economy": "KAZ",
+      "regional_leaders": ["KAZ", "UZB"],
+      "spillover_strength": 0.30,
+      "rationale": "Russia/China dual influence, commodity exports, remittances"
+    },
+    "southeast_asia": {
+      "name": "Southeast Asia",
+      "dominant_economy": "IDN",
+      "regional_leaders": ["IDN", "THA", "VNM", "MYS", "SGP"],
+      "spillover_strength": 0.40,
+      "rationale": "ASEAN integration, manufacturing supply chains, China linkages"
+    }
+  },
+  "global_powers": {
+    "description": "Countries with global (not just regional) spillover effects",
+    "countries": {
+      "USA": {
+        "global_spillover_strength": 0.15,
+        "channels": ["financial_markets", "trade", "policy_diffusion", "technology"]
+      },
+      "CHN": {
+        "global_spillover_strength": 0.12,
+        "channels": ["trade", "commodity_demand", "investment", "supply_chains"]
+      },
+      "DEU": {
+        "global_spillover_strength": 0.06,
+        "channels": ["trade", "eurozone_policy", "manufacturing"]
+      }
+    }
+  },
+  "usage": {
+    "simulation_formula": "regional_effect = direct_effect * spillover_strength",
+    "example": "If China GDP +2%, East Asia regional spillover = 2% * 0.45 = +0.9%",
+    "caveats": [
+      "Proxy estimates only - real bilateral effects may differ",
+      "Assumes symmetric spillovers within region",
+      "Does not capture bilateral heterogeneity (e.g., Vietnam vs Japan from China shock)"
+    ]
+  }
+}

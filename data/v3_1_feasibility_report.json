@@ -1,0 +1,271 @@
+{
+  "generated": "2026-01-14T12:14:28.322639",
+  "v21_methodology_loaded": true,
+  "panel_stats": {
+    "total_rows": 18296578,
+    "unique_indicators": 3122,
+    "unique_countries": 893
+  },
+  "outcome_domains": [
+    {
+      "name": "Health & Longevity",
+      "n_indicators_mapped": 143,
+      "n_in_panel": 143,
+      "coverage": 1.0,
+      "sample_test": {
+        "country": "United States",
+        "year": 2000,
+        "target_composite_valid": true,
+        "n_features": 2500,
+        "n_samples": 11,
+        "domain_indicators_used": [
+          "SP.POP.AG06.FE.IN",
+          "npopulf501",
+          "SP.POP.0014.MA.IN"
+        ],
+        "shap_runtime_sec": 0.13,
+        "top_5_shap": {
+          "SP.POP.80UP.MA.5Y": 0.025143225040395248,
+          "mnsrhni999": 0.02135481316590351,
+          "SP.POP.2024.FE.5Y": 0.020637311507325663,
+          "npopuli996": 0.018157255079753985,
+          "SP.POP.AG10.MA.IN": 0.015751953292141675
+        }
+      },
+      "error": null
+    },
+    {
+      "name": "Education & Knowledge",
+      "n_indicators_mapped": 491,
+      "n_in_panel": 491,
+      "coverage": 1.0,
+      "sample_test": {
+        "country": "United States",
+        "year": 2000,
+        "target_composite_valid": true,
+        "n_features": 2504,
+        "n_samples": 11,
+        "domain_indicators_used": [
+          "v2edtequal_mean",
+          "ROFST.3.GPIA.CP",
+          "OFST.3.F.CP"
+        ],
+        "shap_runtime_sec": 0.05,
+        "top_5_shap": {
+          "DMGSRMRCHNSCD": 0.005509641823190584,
+          "SP.POP.AG11.FE.IN": 0.004958677640871528,
+          "ascgrxi992": 0.004462809876784373,
+          "EN.GHG.CO2.IC.MT.CE.AR5": 0.004016528889105937,
+          "20182": 0.0036148760001953415
+        }
+      },
+      "error": null
+    },
+    {
+      "name": "Income & Living Standards",
+      "n_indicators_mapped": 191,
+      "n_in_panel": 191,
+      "coverage": 1.0,
+      "sample_test": {
+        "country": "United States",
+        "year": 2020,
+        "target_composite_valid": true,
+        "n_features": 2575,
+        "n_samples": 31,
+        "domain_indicators_used": [
+          "v2exdfdmhs_osp",
+          "PA.NUS.PPPC.RF",
+          "20070"
+        ],
+        "shap_runtime_sec": 0.5,
+        "top_5_shap": {
+          "25051": 0.006992431059503698,
+          "SP.POP.0509.MA": 0.006336779528756477,
+          "v2elfrfair_osp": 0.004286483863039898,
+          "v2elpaidig": 0.004236874055321864,
+          "NER.02.CP": 0.003620362680160229
+        }
+      },
+      "error": null
+    },
+    {
+      "name": "Equality & Fairness",
+      "n_indicators_mapped": 126,
+      "n_in_panel": 126,
+      "coverage": 1.0,
+      "sample_test": {
+        "country": "United States",
+        "year": 2000,
+        "target_composite_valid": true,
+        "n_features": 2501,
+        "n_samples": 11,
+        "domain_indicators_used": [
+          "apwtgri999",
+          "v2peasbegeo_mean",
+          "wgwbusi999"
+        ],
+        "shap_runtime_sec": 0.14,
+        "top_5_shap": {
+          "acwhoui999": 0.011337265063884881,
+          "GFDD.DI.02": 0.011133810585878425,
+          "agwfini999": 0.008687380764713669,
+          "agwfini992": 0.006625936103473806,
+          "acwbusi992": 0.0064718448908457574
+        }
+      },
+      "error": null
+    },
+    {
+      "name": "Safety & Security",
+      "n_indicators_mapped": 36,
+      "n_in_panel": 36,
+      "coverage": 1.0,
+      "sample_test": {
+        "country": "United States",
+        "year": 2000,
+        "target_composite_valid": true,
+        "n_features": 2506,
+        "n_samples": 11,
+        "domain_indicators_used": [
+          "HWF_0015",
+          "v2lgotovst_ord",
+          "SM.POP.RHCR.EA"
+        ],
+        "shap_runtime_sec": 0.14,
+        "top_5_shap": {
+          "EN.GHG.CH4.FE.MT.CE.AR5": 0.13381772077413095,
+          "extensive": 0.0034185725604284896,
+          "GFDD.DI.12": 0.0033354187314205146,
+          "NV.AGR.TOTL.KD.ZG": 0.002960704664623969,
+          "ER.FSH.CAPT.MT": 0.002827381696839836
+        }
+      },
+      "error": null
+    },
+    {
+      "name": "Governance & Democracy",
+      "n_indicators_mapped": 357,
+      "n_in_panel": 357,
+      "coverage": 1.0,
+      "sample_test": {
+        "country": "United States",
+        "year": 2010,
+        "target_composite_valid": true,
+        "n_features": 2576,
+        "n_samples": 21,
+        "domain_indicators_used": [
+          "v2lgdomchm_nr",
+          "v2ellocpwr_ord",
+          "v2clrgwkch_4"
+        ],
+        "shap_runtime_sec": 0.09,
+        "top_5_shap": {
+          "v2elsnmrfc_nr": 0.04633000698527592,
+          "EA.7T8.AG25T99": 0.03673469385722582,
+          "ascrpxi999": 0.03306122447150324,
+          "EN.GHG.CH4.TR.MT.CE.AR5": 0.02975510202435291,
+          "HIV_0000000026": 0.02677959182191764
+        }
+      },
+      "error": null
+    },
+    {
+      "name": "Infrastructure & Access",
+      "n_indicators_mapped": 229,
+      "n_in_panel": 229,
+      "coverage": 1.0,
+      "sample_test": {
+        "country": "United States",
+        "year": 2000,
+        "target_composite_valid": true,
+        "n_features": 2500,
+        "n_samples": 11,
+        "domain_indicators_used": [
+          "acfcfci999",
+          "aspigei999",
+          "asacgei999"
+        ],
+        "shap_runtime_sec": 0.14,
+        "top_5_shap": {
+          "mcfcnfi999": 0.014059372271748504,
+          "eofcari999": 0.013204306829240715,
+          "mprghni999": 0.0125578999884337,
+          "asavhoi999": 0.010460443692363026,
+          "npopulm202": 0.010352303125015104
+        }
+      },
+      "error": null
+    },
+    {
+      "name": "Employment & Work",
+      "n_indicators_mapped": 96,
+      "n_in_panel": 96,
+      "coverage": 1.0,
+      "sample_test": {
+        "country": "United States",
+        "year": 2000,
+        "target_composite_valid": true,
+        "n_features": 2501,
+        "n_samples": 11,
+        "domain_indicators_used": [
+          "e_v2x_genpp_5C",
+          "ytgnnxi999",
+          "v2temonitor_mean"
+        ],
+        "shap_runtime_sec": 0.13,
+        "top_5_shap": {
+          "MORT_MATERNALNUM": 0.015969565650655052,
+          "csh_r": 0.01205986640744965,
+          "yprinfi999": 0.009001689734134842,
+          "v2caconmob_osp": 0.008768665107774047,
+          "npopuli602": 0.007356779246690593
+        }
+      },
+      "error": null
+    },
+    {
+      "name": "Environment & Sustainability",
+      "n_indicators_mapped": 300,
+      "n_in_panel": 300,
+      "coverage": 1.0,
+      "sample_test": {
+        "country": "United States",
+        "year": 2000,
+        "target_composite_valid": true,
+        "n_features": 2505,
+        "n_samples": 11,
+        "domain_indicators_used": [
+          "NY.ADJ.DNGY.GN.ZS",
+          "EN.GHG.CH4.IC.MT.CE.AR5",
+          "AG.PRD.FOOD.XD"
+        ],
+        "shap_runtime_sec": 0.14,
+        "top_5_shap": {
+          "accmhoi992": 0.024567885079508432,
+          "accmhoi999": 0.021754309277854014,
+          "AG.PRD.CREL.MT": 0.015066809335467684,
+          "mprgnpi999": 0.014444420915893146,
+          "SP.DYN.LE00.IN": 0.013268055909524788
+        }
+      },
+      "error": null
+    }
+  ],
+  "estimated_runtime": {
+    "cases_total": 38844,
+    "success_rate_estimated": 0.7,
+    "cases_expected_success": 27190,
+    "runtime_per_case_sec": 0.16,
+    "total_runtime_hours_single": 1.2,
+    "total_runtime_hours_parallel": 0.1,
+    "total_runtime_days": 0.0,
+    "cores_assumed": 16
+  },
+  "blocking_issues": [],
+  "recommendation": "PROCEED",
+  "modifications_needed": [
+    "Data coverage acceptable",
+    "Runtime within bounds",
+    "Recommend using LightGBM for speed"
+  ]
+}
