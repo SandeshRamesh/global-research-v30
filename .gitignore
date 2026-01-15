@@ -1,0 +1,92 @@
+# V3.1 Git Ignore
+
+# ===================
+# Large Data Files (use Git LFS or external storage)
+# ===================
+
+# Pre-computed output data (9,926 files, ~8GB total)
+data/v3_1_temporal_shap/
+data/v3_1_temporal_graphs/
+data/v3_1_feedback_loops/
+data/v3_1_development_clusters/
+
+# Mock/test data
+data/v3_1_temporal_shap_mock/
+
+# Archive
+data/_archive/
+
+# Spillovers (empty/skipped)
+data/v3_1_spillovers/
+
+# Symlinked directories (point to v3.0)
+data/country_graphs
+data/country_shap
+
+# Raw data (large parquet files)
+data/raw/*.parquet
+data/raw/*.csv
+
+# ===================
+# Keep these in git
+# ===================
+# !data/metadata/  (income classifications, indicator properties)
+# !data/regional_spillovers.json
+# !data/canonical_countries.txt
+
+# ===================
+# Python
+# ===================
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# ===================
+# Logs
+# ===================
+logs/
+*.log
+
+# ===================
+# IDE
+# ===================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# ===================
+# OS
+# ===================
+.DS_Store
+Thumbs.db
+
+# ===================
+# Jupyter
+# ===================
+.ipynb_checkpoints/
+
+# ===================
+# Environment
+# ===================
+.env
+.env.local

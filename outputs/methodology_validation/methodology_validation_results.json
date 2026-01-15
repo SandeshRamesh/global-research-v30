@@ -1,0 +1,56 @@
+{
+  "test1_failure_bias": {
+    "by_income_group": {
+      "Low income": {
+        "total": 23,
+        "pass": 23,
+        "fail": 0,
+        "fail_rate": 0.0
+      },
+      "Lower middle income": {
+        "total": 44,
+        "pass": 44,
+        "fail": 0,
+        "fail_rate": 0.0
+      },
+      "Upper middle income": {
+        "total": 44,
+        "pass": 44,
+        "fail": 0,
+        "fail_rate": 0.0
+      },
+      "High income": {
+        "total": 47,
+        "pass": 47,
+        "fail": 0,
+        "fail_rate": 0.0
+      },
+      "Unknown": {
+        "total": 20,
+        "pass": 20,
+        "fail": 0,
+        "fail_rate": 0.0
+      }
+    },
+    "by_country": {},
+    "population_coverage": {
+      "total": {
+        "covered": 7477.100000000001,
+        "total": 7477.100000000001,
+        "pct": 1.0
+      },
+      "without_top5": {
+        "covered": 3810.1000000000013,
+        "total": 3810.1000000000013,
+        "pct": 1.0
+      },
+      "low_income": {
+        "covered": 3950.3,
+        "total": 3950.3,
+        "pct": 1.0
+      }
+    }
+  },
+  "test2_aggregation": null,
+  "test3_heterogeneity": null
+}

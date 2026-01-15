@@ -1,0 +1,76 @@
+======================================================================
+QUICK METHODOLOGY VALIDATION
+======================================================================
+
+Loading data...
+  Panel: 18,296,578 rows
+  Countries: 178
+  Indicator directions: 3743
+  Domains: 9
+    health_longevity: 191 indicators
+    education_knowledge: 604 indicators
+    income_living_standards: 583 indicators
+    safety_security: 58 indicators
+    governance_democracy: 466 indicators
+    environment_sustainability: 385 indicators
+    equality_fairness: 10 indicators
+    infrastructure_access: 10 indicators
+    employment_work: 10 indicators
+
+======================================================================
+TEST 1: FAILURE BIAS ANALYSIS
+======================================================================
+
+Failure Rate by Income Group (threshold: 20 indicators):
+------------------------------------------------------------
+Low income                21       Pass: 21     Fail: 0      (0.0%)
+Lower middle income       25       Pass: 25     Fail: 0      (0.0%)
+Upper middle income       22       Pass: 22     Fail: 0      (0.0%)
+High income               31       Pass: 31     Fail: 0      (0.0%)
+Unknown                   79       Pass: 79     Fail: 0      (0.0%)
+
+======================================================================
+TEST 2: ARITHMETIC VS GEOMETRIC MEAN
+======================================================================
+
+Data: 26781 observations, 3122 indicators
+Domains with data: 9
+Clean: 25633 observations, 3122 features
+
+Computing SHAP for arithmetic mean target...
+  R²: 0.708
+Computing SHAP for geometric mean target...
+  R²: 0.740
+
+Results:
+  Spearman correlation: 0.453 (p=1.79e-157)
+  Top-30 overlap: 17/30 (56.7%)
+  INTERPRETATION: HIGH sensitivity - must justify choice
+
+======================================================================
+TEST 3: CROSS-COUNTRY HETEROGENEITY
+======================================================================
+
+Processing Low+Lower-mid...
+  Data: 1457 obs, 2957 indicators
+  Clean: 1457 obs, 2957 features
+  R²: 0.984
+
+Processing Upper-middle...
+  Data: 713 obs, 2957 indicators
+  Clean: 713 obs, 2957 features
+  R²: 0.982
+
+Processing High...
+  Data: 961 obs, 3100 indicators
+  Clean: 961 obs, 3100 features
+  R²: 0.994
+
+Cross-group correlations:
+  Low+Lower-mid vs Upper-middle: 0.290 (n=2957)
+  Low+Lower-mid vs High: 0.248 (n=2950)
+  Upper-middle vs High: 0.275 (n=2950)
+
+======================================================================
+VALIDATION COMPLETE
+======================================================================

@@ -1,0 +1,852 @@
+{
+  "generated_date": "2026-01-12T12:18:26.194152",
+  "total_shocks": 30,
+  "summary": {
+    "by_type": {
+      "economic_crisis": 5,
+      "pandemic": 1,
+      "conflict": 12,
+      "famine": 1,
+      "regime_change": 5,
+      "policy_change": 3,
+      "natural_disaster": 1,
+      "epidemic": 2
+    },
+    "countries_affected": 21,
+    "years_covered": 19,
+    "exclude_from_training": 7
+  },
+  "shocks": {
+    "global_2008_financial_crisis": {
+      "id": "global_2008_financial_crisis",
+      "year": 2008,
+      "end_year": 2010,
+      "country": "global",
+      "affected_countries": [
+        "United States",
+        "United Kingdom",
+        "Germany",
+        "France",
+        "Spain",
+        "Greece",
+        "Ireland",
+        "Iceland"
+      ],
+      "type": "economic_crisis",
+      "severity": "high",
+      "name": "Global Financial Crisis",
+      "description": "Subprime mortgage crisis leading to global recession",
+      "affected_domains": [
+        "economic",
+        "governance"
+      ],
+      "expected_effects": {
+        "gdp": "negative",
+        "unemployment": "increase",
+        "trade": "decrease"
+      },
+      "source": "IMF World Economic Outlook"
+    },
+    "global_2020_covid": {
+      "id": "global_2020_covid",
+      "year": 2020,
+      "end_year": 2022,
+      "country": "global",
+      "affected_countries": "all",
+      "type": "pandemic",
+      "severity": "extreme",
+      "name": "COVID-19 Pandemic",
+      "description": "Global pandemic causing health and economic disruption",
+      "affected_domains": [
+        "health",
+        "economic",
+        "education"
+      ],
+      "expected_effects": {
+        "life_expectancy": "negative",
+        "gdp": "negative",
+        "school_enrollment": "negative"
+      },
+      "source": "WHO, World Bank"
+    },
+    "global_1997_asian_crisis": {
+      "id": "global_1997_asian_crisis",
+      "year": 1997,
+      "end_year": 1998,
+      "country": "global",
+      "affected_countries": [
+        "Thailand",
+        "Indonesia",
+        "South Korea",
+        "Malaysia",
+        "Philippines",
+        "Hong Kong",
+        "Singapore"
+      ],
+      "type": "economic_crisis",
+      "severity": "high",
+      "name": "Asian Financial Crisis",
+      "description": "Currency and debt crisis in East Asia",
+      "affected_domains": [
+        "economic"
+      ],
+      "expected_effects": {
+        "gdp": "negative",
+        "currency": "depreciate"
+      },
+      "source": "IMF"
+    },
+    "rwa_1994_genocide": {
+      "id": "rwa_1994_genocide",
+      "year": 1994,
+      "end_year": 1994,
+      "country": "Rwanda",
+      "type": "conflict",
+      "severity": "extreme",
+      "name": "Rwandan Genocide",
+      "description": "Genocide against Tutsi population",
+      "affected_domains": [
+        "all"
+      ],
+      "expected_effects": {
+        "life_expectancy": "extreme_negative",
+        "gdp": "negative",
+        "all_indicators": "disrupted"
+      },
+      "should_exclude_from_training": true,
+      "source": "UN, Human Rights Watch"
+    },
+    "eth_1983_famine": {
+      "id": "eth_1983_famine",
+      "year": 1983,
+      "end_year": 1985,
+      "country": "Ethiopia",
+      "type": "famine",
+      "severity": "extreme",
+      "name": "Ethiopian Famine",
+      "description": "Major famine causing mass mortality",
+      "affected_domains": [
+        "health",
+        "demographics"
+      ],
+      "expected_effects": {
+        "life_expectancy": "extreme_negative",
+        "infant_mortality": "increase"
+      },
+      "source": "UN OCHA"
+    },
+    "ssd_2011_independence": {
+      "id": "ssd_2011_independence",
+      "year": 2011,
+      "country": "South Sudan",
+      "type": "regime_change",
+      "severity": "medium",
+      "name": "South Sudan Independence",
+      "description": "Independence from Sudan, new country formation",
+      "affected_domains": [
+        "all"
+      ],
+      "expected_effects": {
+        "data_availability": "new_series"
+      },
+      "source": "UN"
+    },
+    "ssd_2013_civil_war": {
+      "id": "ssd_2013_civil_war",
+      "year": 2013,
+      "end_year": 2020,
+      "country": "South Sudan",
+      "type": "conflict",
+      "severity": "high",
+      "name": "South Sudanese Civil War",
+      "description": "Civil war causing humanitarian crisis",
+      "affected_domains": [
+        "all"
+      ],
+      "expected_effects": {
+        "life_expectancy": "negative",
+        "gdp": "negative"
+      },
+      "source": "UN, ACLED"
+    },
+    "cod_1998_war": {
+      "id": "cod_1998_war",
+      "year": 1998,
+      "end_year": 2003,
+      "country": "Congo, Dem. Rep.",
+      "type": "conflict",
+      "severity": "extreme",
+      "name": "Second Congo War",
+      "description": "Deadliest conflict since WWII",
+      "affected_domains": [
+        "all"
+      ],
+      "expected_effects": {
+        "life_expectancy": "extreme_negative",
+        "all_indicators": "disrupted"
+      },
+      "should_exclude_from_training": true,
+      "source": "UN, IRC"
+    },
+    "som_1991_civil_war": {
+      "id": "som_1991_civil_war",
+      "year": 1991,
+      "end_year": 2012,
+      "country": "Somalia",
+      "type": "conflict",
+      "severity": "extreme",
+      "name": "Somali Civil War",
+      "description": "State collapse and ongoing conflict",
+      "affected_domains": [
+        "all"
+      ],
+      "expected_effects": {
+        "all_indicators": "disrupted"
+      },
+      "should_exclude_from_training": true,
+      "source": "UN, ACLED"
+    },
+    "syr_2011_civil_war": {
+      "id": "syr_2011_civil_war",
+      "year": 2011,
+      "end_year": null,
+      "country": "Syria",
+      "type": "conflict",
+      "severity": "extreme",
+      "name": "Syrian Civil War",
+      "description": "Ongoing civil war causing mass displacement",
+      "affected_domains": [
+        "all"
+      ],
+      "expected_effects": {
+        "life_expectancy": "extreme_negative",
+        "gdp": "extreme_negative",
+        "population": "decrease"
+      },
+      "should_exclude_from_training": true,
+      "source": "UN, Syrian Observatory"
+    },
+    "irq_2003_war": {
+      "id": "irq_2003_war",
+      "year": 2003,
+      "end_year": 2011,
+      "country": "Iraq",
+      "type": "conflict",
+      "severity": "high",
+      "name": "Iraq War",
+      "description": "US invasion and subsequent insurgency",
+      "affected_domains": [
+        "all"
+      ],
+      "expected_effects": {
+        "life_expectancy": "negative",
+        "gdp": "mixed"
+      },
+      "source": "UN, DoD"
+    },
+    "yem_2014_civil_war": {
+      "id": "yem_2014_civil_war",
+      "year": 2014,
+      "end_year": null,
+      "country": "Yemen",
+      "type": "conflict",
+      "severity": "extreme",
+      "name": "Yemeni Civil War",
+      "description": "Ongoing civil war and humanitarian crisis",
+      "affected_domains": [
+        "all"
+      ],
+      "expected_effects": {
+        "life_expectancy": "extreme_negative",
+        "famine": true
+      },
+      "should_exclude_from_training": true,
+      "source": "UN OCHA"
+    },
+    "ussr_1991_collapse": {
+      "id": "ussr_1991_collapse",
+      "year": 1991,
+      "end_year": 1991,
+      "country": "global",
+      "affected_countries": [
+        "Russia",
+        "Ukraine",
+        "Belarus",
+        "Kazakhstan",
+        "Uzbekistan",
+        "Turkmenistan",
+        "Kyrgyzstan",
+        "Tajikistan",
+        "Armenia",
+        "Azerbaijan",
+        "Georgia",
+        "Moldova",
+        "Latvia",
+        "Lithuania",
+        "Estonia"
+      ],
+      "type": "regime_change",
+      "severity": "high",
+      "name": "Soviet Union Collapse",
+      "description": "Dissolution of USSR, formation of new states",
+      "affected_domains": [
+        "all"
+      ],
+      "expected_effects": {
+        "gdp": "negative",
+        "life_expectancy": "negative",
+        "data_availability": "new_series"
+      },
+      "source": "World Bank"
+    },
+    "yug_1991_breakup": {
+      "id": "yug_1991_breakup",
+      "year": 1991,
+      "end_year": 2001,
+      "country": "global",
+      "affected_countries": [
+        "Serbia",
+        "Croatia",
+        "Bosnia and Herzegovina",
+        "Slovenia",
+        "Montenegro",
+        "North Macedonia",
+        "Kosovo"
+      ],
+      "type": "conflict",
+      "severity": "high",
+      "name": "Yugoslav Wars",
+      "description": "Series of ethnic conflicts during Yugoslavia breakup",
+      "affected_domains": [
+        "all"
+      ],
+      "expected_effects": {
+        "life_expectancy": "negative",
+        "gdp": "negative"
+      },
+      "source": "UN, ICTY"
+    },
+    "ukr_2022_war": {
+      "id": "ukr_2022_war",
+      "year": 2022,
+      "end_year": null,
+      "country": "Ukraine",
+      "type": "conflict",
+      "severity": "extreme",
+      "name": "Russia-Ukraine War",
+      "description": "Full-scale Russian invasion of Ukraine",
+      "affected_domains": [
+        "all"
+      ],
+      "expected_effects": {
+        "life_expectancy": "negative",
+        "gdp": "extreme_negative",
+        "population": "decrease"
+      },
+      "should_exclude_from_training": true,
+      "source": "UN, World Bank"
+    },
+    "grc_2010_debt_crisis": {
+      "id": "grc_2010_debt_crisis",
+      "year": 2010,
+      "end_year": 2018,
+      "country": "Greece",
+      "type": "economic_crisis",
+      "severity": "high",
+      "name": "Greek Debt Crisis",
+      "description": "Sovereign debt crisis and austerity measures",
+      "affected_domains": [
+        "economic",
+        "health"
+      ],
+      "expected_effects": {
+        "gdp": "negative",
+        "unemployment": "increase"
+      },
+      "source": "IMF, ECB"
+    },
+    "chn_2001_wto": {
+      "id": "chn_2001_wto",
+      "year": 2001,
+      "country": "China",
+      "type": "policy_change",
+      "severity": "medium",
+      "name": "China WTO Accession",
+      "description": "China joins World Trade Organization",
+      "affected_domains": [
+        "economic"
+      ],
+      "expected_effects": {
+        "trade": "increase",
+        "gdp": "positive"
+      },
+      "source": "WTO"
+    },
+    "khm_1975_genocide": {
+      "id": "khm_1975_genocide",
+      "year": 1975,
+      "end_year": 1979,
+      "country": "Cambodia",
+      "type": "conflict",
+      "severity": "extreme",
+      "name": "Cambodian Genocide (Khmer Rouge)",
+      "description": "Mass killings under Pol Pot regime",
+      "affected_domains": [
+        "all"
+      ],
+      "expected_effects": {
+        "life_expectancy": "extreme_negative",
+        "population": "decrease"
+      },
+      "should_exclude_from_training": true,
+      "source": "UN, DC-Cam"
+    },
+    "mmr_2021_coup": {
+      "id": "mmr_2021_coup",
+      "year": 2021,
+      "end_year": null,
+      "country": "Myanmar",
+      "type": "regime_change",
+      "severity": "high",
+      "name": "Myanmar Military Coup",
+      "description": "Military coup and subsequent civil unrest",
+      "affected_domains": [
+        "governance",
+        "economic"
+      ],
+      "expected_effects": {
+        "democracy": "negative",
+        "gdp": "negative"
+      },
+      "source": "UN, ASEAN"
+    },
+    "lka_1983_civil_war": {
+      "id": "lka_1983_civil_war",
+      "year": 1983,
+      "end_year": 2009,
+      "country": "Sri Lanka",
+      "type": "conflict",
+      "severity": "high",
+      "name": "Sri Lankan Civil War",
+      "description": "Ethnic conflict between government and Tamil Tigers",
+      "affected_domains": [
+        "security",
+        "economic"
+      ],
+      "expected_effects": {
+        "gdp": "negative",
+        "tourism": "negative"
+      },
+      "source": "UN"
+    },
+    "afg_2001_invasion": {
+      "id": "afg_2001_invasion",
+      "year": 2001,
+      "end_year": 2021,
+      "country": "Afghanistan",
+      "type": "conflict",
+      "severity": "high",
+      "name": "War in Afghanistan",
+      "description": "US-led invasion following 9/11",
+      "affected_domains": [
+        "all"
+      ],
+      "expected_effects": {
+        "mixed": true
+      },
+      "source": "UN, DoD"
+    },
+    "afg_2021_taliban": {
+      "id": "afg_2021_taliban",
+      "year": 2021,
+      "end_year": null,
+      "country": "Afghanistan",
+      "type": "regime_change",
+      "severity": "high",
+      "name": "Taliban Takeover",
+      "description": "Taliban regains control, international isolation",
+      "affected_domains": [
+        "all"
+      ],
+      "expected_effects": {
+        "gdp": "extreme_negative",
+        "education": "negative",
+        "womens_rights": "negative"
+      },
+      "source": "UN, World Bank"
+    },
+    "arg_2001_crisis": {
+      "id": "arg_2001_crisis",
+      "year": 2001,
+      "end_year": 2002,
+      "country": "Argentina",
+      "type": "economic_crisis",
+      "severity": "high",
+      "name": "Argentine Economic Crisis",
+      "description": "Currency board collapse and default",
+      "affected_domains": [
+        "economic"
+      ],
+      "expected_effects": {
+        "gdp": "negative",
+        "poverty": "increase"
+      },
+      "source": "IMF"
+    },
+    "ven_2014_crisis": {
+      "id": "ven_2014_crisis",
+      "year": 2014,
+      "end_year": null,
+      "country": "Venezuela",
+      "type": "economic_crisis",
+      "severity": "extreme",
+      "name": "Venezuelan Crisis",
+      "description": "Hyperinflation and economic collapse",
+      "affected_domains": [
+        "economic",
+        "health"
+      ],
+      "expected_effects": {
+        "gdp": "extreme_negative",
+        "inflation": "extreme",
+        "emigration": "increase"
+      },
+      "source": "IMF, UN"
+    },
+    "hti_2010_earthquake": {
+      "id": "hti_2010_earthquake",
+      "year": 2010,
+      "country": "Haiti",
+      "type": "natural_disaster",
+      "severity": "extreme",
+      "name": "Haiti Earthquake",
+      "description": "Magnitude 7.0 earthquake devastating Port-au-Prince",
+      "affected_domains": [
+        "all"
+      ],
+      "expected_effects": {
+        "gdp": "negative",
+        "infrastructure": "destroyed"
+      },
+      "source": "UN, USGS"
+    },
+    "global_hiv_peak": {
+      "id": "global_hiv_peak",
+      "year": 1995,
+      "end_year": 2005,
+      "country": "global",
+      "affected_countries": [
+        "South Africa",
+        "Botswana",
+        "Zimbabwe",
+        "Lesotho",
+        "Eswatini",
+        "Namibia",
+        "Zambia",
+        "Malawi",
+        "Mozambique",
+        "Uganda",
+        "Kenya",
+        "Tanzania"
+      ],
+      "type": "epidemic",
+      "severity": "extreme",
+      "name": "HIV/AIDS Epidemic Peak",
+      "description": "Peak of HIV/AIDS epidemic in Sub-Saharan Africa",
+      "affected_domains": [
+        "health",
+        "demographics"
+      ],
+      "expected_effects": {
+        "life_expectancy": "extreme_negative",
+        "infant_mortality": "increase"
+      },
+      "source": "UNAIDS, WHO"
+    },
+    "waf_2014_ebola": {
+      "id": "waf_2014_ebola",
+      "year": 2014,
+      "end_year": 2016,
+      "country": "global",
+      "affected_countries": [
+        "Sierra Leone",
+        "Liberia",
+        "Guinea"
+      ],
+      "type": "epidemic",
+      "severity": "high",
+      "name": "West African Ebola Outbreak",
+      "description": "Largest Ebola outbreak in history",
+      "affected_domains": [
+        "health",
+        "economic"
+      ],
+      "expected_effects": {
+        "health_system": "overwhelmed",
+        "gdp": "negative"
+      },
+      "source": "WHO, CDC"
+    },
+    "eu_2004_expansion": {
+      "id": "eu_2004_expansion",
+      "year": 2004,
+      "country": "global",
+      "affected_countries": [
+        "Poland",
+        "Czech Republic",
+        "Hungary",
+        "Slovakia",
+        "Slovenia",
+        "Estonia",
+        "Latvia",
+        "Lithuania",
+        "Malta",
+        "Cyprus"
+      ],
+      "type": "policy_change",
+      "severity": "medium",
+      "name": "EU Eastern Expansion",
+      "description": "Major EU expansion to Eastern Europe",
+      "affected_domains": [
+        "economic",
+        "governance"
+      ],
+      "expected_effects": {
+        "gdp": "positive",
+        "migration": "increase"
+      },
+      "source": "European Commission"
+    },
+    "gbr_2016_brexit": {
+      "id": "gbr_2016_brexit",
+      "year": 2016,
+      "end_year": 2020,
+      "country": "United Kingdom",
+      "type": "policy_change",
+      "severity": "medium",
+      "name": "Brexit",
+      "description": "UK referendum and withdrawal from EU",
+      "affected_domains": [
+        "economic",
+        "governance"
+      ],
+      "expected_effects": {
+        "trade": "decrease",
+        "gdp": "mixed"
+      },
+      "source": "UK Government, EU"
+    },
+    "zaf_1994_apartheid_end": {
+      "id": "zaf_1994_apartheid_end",
+      "year": 1994,
+      "country": "South Africa",
+      "type": "regime_change",
+      "severity": "medium",
+      "name": "End of Apartheid",
+      "description": "First democratic elections, end of apartheid",
+      "affected_domains": [
+        "governance",
+        "economic"
+      ],
+      "expected_effects": {
+        "democracy": "positive",
+        "equality": "positive"
+      },
+      "source": "South African Government"
+    }
+  },
+  "indices": {
+    "by_type": {
+      "economic_crisis": [
+        "global_2008_financial_crisis",
+        "global_1997_asian_crisis",
+        "grc_2010_debt_crisis",
+        "arg_2001_crisis",
+        "ven_2014_crisis"
+      ],
+      "pandemic": [
+        "global_2020_covid"
+      ],
+      "conflict": [
+        "rwa_1994_genocide",
+        "ssd_2013_civil_war",
+        "cod_1998_war",
+        "som_1991_civil_war",
+        "syr_2011_civil_war",
+        "irq_2003_war",
+        "yem_2014_civil_war",
+        "yug_1991_breakup",
+        "ukr_2022_war",
+        "khm_1975_genocide",
+        "lka_1983_civil_war",
+        "afg_2001_invasion"
+      ],
+      "famine": [
+        "eth_1983_famine"
+      ],
+      "regime_change": [
+        "ssd_2011_independence",
+        "ussr_1991_collapse",
+        "mmr_2021_coup",
+        "afg_2021_taliban",
+        "zaf_1994_apartheid_end"
+      ],
+      "policy_change": [
+        "chn_2001_wto",
+        "eu_2004_expansion",
+        "gbr_2016_brexit"
+      ],
+      "natural_disaster": [
+        "hti_2010_earthquake"
+      ],
+      "epidemic": [
+        "global_hiv_peak",
+        "waf_2014_ebola"
+      ]
+    },
+    "by_country": {
+      "global": [
+        "global_2008_financial_crisis",
+        "global_2020_covid",
+        "global_1997_asian_crisis",
+        "ussr_1991_collapse",
+        "yug_1991_breakup",
+        "global_hiv_peak",
+        "waf_2014_ebola",
+        "eu_2004_expansion"
+      ],
+      "Rwanda": [
+        "rwa_1994_genocide"
+      ],
+      "Ethiopia": [
+        "eth_1983_famine"
+      ],
+      "South Sudan": [
+        "ssd_2011_independence",
+        "ssd_2013_civil_war"
+      ],
+      "Congo, Dem. Rep.": [
+        "cod_1998_war"
+      ],
+      "Somalia": [
+        "som_1991_civil_war"
+      ],
+      "Syria": [
+        "syr_2011_civil_war"
+      ],
+      "Iraq": [
+        "irq_2003_war"
+      ],
+      "Yemen": [
+        "yem_2014_civil_war"
+      ],
+      "Ukraine": [
+        "ukr_2022_war"
+      ],
+      "Greece": [
+        "grc_2010_debt_crisis"
+      ],
+      "China": [
+        "chn_2001_wto"
+      ],
+      "Cambodia": [
+        "khm_1975_genocide"
+      ],
+      "Myanmar": [
+        "mmr_2021_coup"
+      ],
+      "Sri Lanka": [
+        "lka_1983_civil_war"
+      ],
+      "Afghanistan": [
+        "afg_2001_invasion",
+        "afg_2021_taliban"
+      ],
+      "Argentina": [
+        "arg_2001_crisis"
+      ],
+      "Venezuela": [
+        "ven_2014_crisis"
+      ],
+      "Haiti": [
+        "hti_2010_earthquake"
+      ],
+      "United Kingdom": [
+        "gbr_2016_brexit"
+      ],
+      "South Africa": [
+        "zaf_1994_apartheid_end"
+      ]
+    },
+    "by_year": {
+      "1975": [
+        "khm_1975_genocide"
+      ],
+      "1983": [
+        "eth_1983_famine",
+        "lka_1983_civil_war"
+      ],
+      "1991": [
+        "som_1991_civil_war",
+        "ussr_1991_collapse",
+        "yug_1991_breakup"
+      ],
+      "1994": [
+        "rwa_1994_genocide",
+        "zaf_1994_apartheid_end"
+      ],
+      "1995": [
+        "global_hiv_peak"
+      ],
+      "1997": [
+        "global_1997_asian_crisis"
+      ],
+      "1998": [
+        "cod_1998_war"
+      ],
+      "2001": [
+        "chn_2001_wto",
+        "afg_2001_invasion",
+        "arg_2001_crisis"
+      ],
+      "2003": [
+        "irq_2003_war"
+      ],
+      "2004": [
+        "eu_2004_expansion"
+      ],
+      "2008": [
+        "global_2008_financial_crisis"
+      ],
+      "2010": [
+        "grc_2010_debt_crisis",
+        "hti_2010_earthquake"
+      ],
+      "2011": [
+        "ssd_2011_independence",
+        "syr_2011_civil_war"
+      ],
+      "2013": [
+        "ssd_2013_civil_war"
+      ],
+      "2014": [
+        "yem_2014_civil_war",
+        "ven_2014_crisis",
+        "waf_2014_ebola"
+      ],
+      "2016": [
+        "gbr_2016_brexit"
+      ],
+      "2020": [
+        "global_2020_covid"
+      ],
+      "2021": [
+        "mmr_2021_coup",
+        "afg_2021_taliban"
+      ],
+      "2022": [
+        "ukr_2022_war"
+      ]
+    }
+  }
+}

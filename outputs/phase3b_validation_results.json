@@ -1,0 +1,94 @@
+{
+  "stability": {
+    "total_transitions": 592,
+    "unstable_transitions": 0,
+    "instability_rate": 0.0,
+    "large_count_changes": 4,
+    "cluster_count_range": [
+      14,
+      24
+    ],
+    "passed": true
+  },
+  "sizes": {
+    "unified_issues": [],
+    "country_giant_clusters": 0,
+    "total_clusters": 14,
+    "total_nodes": 1926,
+    "size_stats": {
+      "mean": 137.57142857142858,
+      "median": 115.5,
+      "min": 5,
+      "max": 341
+    },
+    "passed": true
+  },
+  "domain": {
+    "unified_issues": 0,
+    "domain_mismatches": 0,
+    "weak_primary": 0,
+    "false_mixed": 0,
+    "country_mismatches": 0,
+    "passed": true
+  },
+  "cross_country": {
+    "groups": {
+      "G7": {
+        "countries": 7,
+        "mean_clusters": 17.0,
+        "std_clusters": 2.5071326821120348,
+        "cv": 0.1474783930654138,
+        "high_variance": false
+      },
+      "BRICS": {
+        "countries": 5,
+        "mean_clusters": 15.8,
+        "std_clusters": 1.6,
+        "cv": 0.10126582278481013,
+        "high_variance": false
+      },
+      "Nordic": {
+        "countries": 5,
+        "mean_clusters": 16.8,
+        "std_clusters": 1.32664991614216,
+        "cv": 0.07896725691322382,
+        "high_variance": false
+      },
+      "Sub-Saharan Africa": {
+        "countries": 5,
+        "mean_clusters": 16.0,
+        "std_clusters": 1.7888543819998317,
+        "cv": 0.11180339887498948,
+        "high_variance": false
+      }
+    },
+    "high_variance_groups": [],
+    "passed": true
+  },
+  "density": {
+    "density_stats": {
+      "mean": 0.07685714285714286,
+      "median": 0.030850000000000002,
+      "min": 0.01,
+      "max": 0.4
+    },
+    "mean_in_range": true,
+    "issues": 1,
+    "high_density_issues": 1,
+    "low_density_issues": 0,
+    "country_high_density": 234,
+    "passed": true
+  },
+  "samples": {
+    "total_clusters": 14,
+    "sample_count_range": [
+      5,
+      5
+    ],
+    "issues": 0,
+    "no_samples": 0,
+    "too_few_samples": 0,
+    "country_issues": 0,
+    "passed": true
+  }
+}

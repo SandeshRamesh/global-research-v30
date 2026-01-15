@@ -1,0 +1,654 @@
+{
+  "timestamp": "2026-01-15T15:04:54.073961",
+  "shap_errors": [
+    {
+      "file": "countries/Australia/quality_of_life/2009_shap.json",
+      "issues": [
+        "Found 29/100 invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Austria/quality_of_life/2013_shap.json",
+      "issues": [
+        "Found 26/100 invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Austria/quality_of_life/2014_shap.json",
+      "issues": [
+        "Found 27/100 invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Austria/quality_of_life/2015_shap.json",
+      "issues": [
+        "Found 26/100 invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Austria/quality_of_life/2018_shap.json",
+      "issues": [
+        "Found 28/100 invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Cuba/quality_of_life/2009_shap.json",
+      "issues": [
+        "Found 26/100 invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Cuba/quality_of_life/2016_shap.json",
+      "issues": [
+        "Found 27/100 invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Cuba/quality_of_life/2018_shap.json",
+      "issues": [
+        "Found 29/100 invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/France/quality_of_life/2017_shap.json",
+      "issues": [
+        "Found 27/100 invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/France/quality_of_life/2018_shap.json",
+      "issues": [
+        "Found 27/100 invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/India/quality_of_life/2009_shap.json",
+      "issues": [
+        "Found 26/100 invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Malaysia/quality_of_life/2010_shap.json",
+      "issues": [
+        "Found 34/100 invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Poland/quality_of_life/2018_shap.json",
+      "issues": [
+        "Found 26/100 invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Saudi Arabia/quality_of_life/2012_shap.json",
+      "issues": [
+        "Found 27/100 invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Spain/quality_of_life/2010_shap.json",
+      "issues": [
+        "Found 31/100 invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Spain/quality_of_life/2014_shap.json",
+      "issues": [
+        "Found 32/100 invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Spain/quality_of_life/2015_shap.json",
+      "issues": [
+        "Found 27/100 invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Spain/quality_of_life/2017_shap.json",
+      "issues": [
+        "Found 26/100 invalid CIs"
+      ]
+    }
+  ],
+  "graph_errors": [
+    {
+      "file": "stratified/advanced/2007_graph.json",
+      "issues": [
+        "Found 19 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "stratified/advanced/2008_graph.json",
+      "issues": [
+        "Found 9 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "stratified/advanced/2009_graph.json",
+      "issues": [
+        "Found 13 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Albania/2009_graph.json",
+      "issues": [
+        "Found 8 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Albania/2015_graph.json",
+      "issues": [
+        "Found 7 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Angola/2009_graph.json",
+      "issues": [
+        "Found 6 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Argentina/2019_graph.json",
+      "issues": [
+        "Found 6 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Austria/2009_graph.json",
+      "issues": [
+        "Found 7 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Bahrain/2016_graph.json",
+      "issues": [
+        "Found 10 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Barbados/2009_graph.json",
+      "issues": [
+        "Found 6 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Bosnia and Herzegovina/2009_graph.json",
+      "issues": [
+        "Found 7 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Brazil/2019_graph.json",
+      "issues": [
+        "Found 6 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Bulgaria/2009_graph.json",
+      "issues": [
+        "Found 6 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Burkina Faso/2009_graph.json",
+      "issues": [
+        "Found 9 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Burundi/2009_graph.json",
+      "issues": [
+        "Found 7 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Cameroon/2009_graph.json",
+      "issues": [
+        "Found 7 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Cameroon/2019_graph.json",
+      "issues": [
+        "Found 13 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Cape Verde/2009_graph.json",
+      "issues": [
+        "Found 8 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/China/2009_graph.json",
+      "issues": [
+        "Found 9 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Cuba/2019_graph.json",
+      "issues": [
+        "Found 24 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Czech Republic/2019_graph.json",
+      "issues": [
+        "Found 7 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Denmark/2019_graph.json",
+      "issues": [
+        "Found 6 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Dominican Republic/2009_graph.json",
+      "issues": [
+        "Found 8 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Dominican Republic/2019_graph.json",
+      "issues": [
+        "Found 6 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Egypt, Arab Rep./2009_graph.json",
+      "issues": [
+        "Found 7 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Estonia/2009_graph.json",
+      "issues": [
+        "Found 7 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/France/2013_graph.json",
+      "issues": [
+        "Found 7 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Ghana/2009_graph.json",
+      "issues": [
+        "Found 7 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Greece/2009_graph.json",
+      "issues": [
+        "Found 15 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Guyana/2009_graph.json",
+      "issues": [
+        "Found 7 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Honduras/2009_graph.json",
+      "issues": [
+        "Found 7 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Indonesia/2002_graph.json",
+      "issues": [
+        "Found 7 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Indonesia/2003_graph.json",
+      "issues": [
+        "Found 6 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Indonesia/2012_graph.json",
+      "issues": [
+        "Found 6 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Iran, Islamic Rep./2009_graph.json",
+      "issues": [
+        "Found 10 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Iran, Islamic Rep./2019_graph.json",
+      "issues": [
+        "Found 7 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Iraq/2009_graph.json",
+      "issues": [
+        "Found 7 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Ivory Coast/2009_graph.json",
+      "issues": [
+        "Found 9 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Jamaica/2007_graph.json",
+      "issues": [
+        "Found 6 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Kenya/2009_graph.json",
+      "issues": [
+        "Found 7 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Korea, Rep./2009_graph.json",
+      "issues": [
+        "Found 9 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Korea, Rep./2017_graph.json",
+      "issues": [
+        "Found 9 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Korea, Rep./2019_graph.json",
+      "issues": [
+        "Found 7 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Kosovo/2009_graph.json",
+      "issues": [
+        "Found 6 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Lebanon/2009_graph.json",
+      "issues": [
+        "Found 9 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Luxembourg/2016_graph.json",
+      "issues": [
+        "Found 6 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Luxembourg/2019_graph.json",
+      "issues": [
+        "Found 6 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Madagascar/2009_graph.json",
+      "issues": [
+        "Found 7 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Madagascar/2019_graph.json",
+      "issues": [
+        "Found 7 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Madagascar/2021_graph.json",
+      "issues": [
+        "Found 7 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Malaysia/2019_graph.json",
+      "issues": [
+        "Found 7 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Malta/2016_graph.json",
+      "issues": [
+        "Found 6 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Mexico/2009_graph.json",
+      "issues": [
+        "Found 9 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Moldova/2009_graph.json",
+      "issues": [
+        "Found 8 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/New Zealand/2009_graph.json",
+      "issues": [
+        "Found 7 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/New Zealand/2019_graph.json",
+      "issues": [
+        "Found 6 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Nicaragua/2009_graph.json",
+      "issues": [
+        "Found 6 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Nigeria/2009_graph.json",
+      "issues": [
+        "Found 7 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Panama/2009_graph.json",
+      "issues": [
+        "Found 7 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Papua New Guinea/2009_graph.json",
+      "issues": [
+        "Found 8 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Poland/2009_graph.json",
+      "issues": [
+        "Found 7 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Russia/2019_graph.json",
+      "issues": [
+        "Found 6 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Saudi Arabia/2009_graph.json",
+      "issues": [
+        "Found 6 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Senegal/2009_graph.json",
+      "issues": [
+        "Found 7 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Singapore/2009_graph.json",
+      "issues": [
+        "Found 18 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Singapore/2016_graph.json",
+      "issues": [
+        "Found 6 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Somalia/2009_graph.json",
+      "issues": [
+        "Found 7 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/South Africa/2009_graph.json",
+      "issues": [
+        "Found 7 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Sudan/2009_graph.json",
+      "issues": [
+        "Found 9 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Taiwan/2019_graph.json",
+      "issues": [
+        "Found 13 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Tajikistan/2009_graph.json",
+      "issues": [
+        "Found 9 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Tanzania/2009_graph.json",
+      "issues": [
+        "Found 8 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Thailand/2009_graph.json",
+      "issues": [
+        "Found 15 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Timor-Leste/2013_graph.json",
+      "issues": [
+        "Found 10 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Uganda/2019_graph.json",
+      "issues": [
+        "Found 6 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Ukraine/2009_graph.json",
+      "issues": [
+        "Found 11 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/United Arab Emirates/2019_graph.json",
+      "issues": [
+        "Found 11 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/United States/2019_graph.json",
+      "issues": [
+        "Found 6 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/United States/2021_graph.json",
+      "issues": [
+        "Found 7 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Uzbekistan/2000_graph.json",
+      "issues": [
+        "Found 6 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Uzbekistan/2002_graph.json",
+      "issues": [
+        "Found 11 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Uzbekistan/2003_graph.json",
+      "issues": [
+        "Found 6 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Uzbekistan/2004_graph.json",
+      "issues": [
+        "Found 8 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Uzbekistan/2009_graph.json",
+      "issues": [
+        "Found 13 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Vanuatu/2016_graph.json",
+      "issues": [
+        "Found 6 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Vietnam/2024_graph.json",
+      "issues": [
+        "Found 6 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Yemen/2019_graph.json",
+      "issues": [
+        "Found 7 edges with invalid CIs"
+      ]
+    },
+    {
+      "file": "countries/Zanzibar/2009_graph.json",
+      "issues": [
+        "Found 7 edges with invalid CIs"
+      ]
+    }
+  ],
+  "loop_errors": [],
+  "cluster_errors": [],
+  "shap_warnings": [
+    {
+      "smoothness_jump": {
+        "year_range": "1990-1991",
+        "change": 0.1031
+      }
+    }
+  ],
+  "graph_warnings": []
+}

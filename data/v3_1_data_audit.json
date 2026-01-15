@@ -1,0 +1,374 @@
+{
+  "audit_date": "2026-01-12T12:09:47.733093",
+  "panel_structure": {
+    "format": "long",
+    "columns": [
+      "country",
+      "year",
+      "indicator_id",
+      "value"
+    ],
+    "total_rows": 18296578,
+    "year_range": [
+      1990,
+      2024
+    ],
+    "unique_countries": 893,
+    "unique_indicators": 3122
+  },
+  "coverage_by_year": {
+    "1990": {
+      "countries": 846,
+      "indicators": 2060,
+      "observations": 413798,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "1991": {
+      "countries": 846,
+      "indicators": 2086,
+      "observations": 418958,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "1992": {
+      "countries": 846,
+      "indicators": 2097,
+      "observations": 420018,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "1993": {
+      "countries": 846,
+      "indicators": 2060,
+      "observations": 414856,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "1994": {
+      "countries": 846,
+      "indicators": 2072,
+      "observations": 416301,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "1995": {
+      "countries": 848,
+      "indicators": 2190,
+      "observations": 435326,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "1996": {
+      "countries": 849,
+      "indicators": 2250,
+      "observations": 444565,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "1997": {
+      "countries": 849,
+      "indicators": 2282,
+      "observations": 450543,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "1998": {
+      "countries": 849,
+      "indicators": 2607,
+      "observations": 504779,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "1999": {
+      "countries": 849,
+      "indicators": 2637,
+      "observations": 509034,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "2000": {
+      "countries": 893,
+      "indicators": 2981,
+      "observations": 556812,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "2001": {
+      "countries": 893,
+      "indicators": 2982,
+      "observations": 556529,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "2002": {
+      "countries": 893,
+      "indicators": 3022,
+      "observations": 560291,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "2003": {
+      "countries": 893,
+      "indicators": 3054,
+      "observations": 563400,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "2004": {
+      "countries": 893,
+      "indicators": 3113,
+      "observations": 574172,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "2005": {
+      "countries": 893,
+      "indicators": 3122,
+      "observations": 575595,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "2006": {
+      "countries": 893,
+      "indicators": 3122,
+      "observations": 575595,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "2007": {
+      "countries": 893,
+      "indicators": 3122,
+      "observations": 575595,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "2008": {
+      "countries": 893,
+      "indicators": 3122,
+      "observations": 575595,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "2009": {
+      "countries": 893,
+      "indicators": 3122,
+      "observations": 575595,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "2010": {
+      "countries": 893,
+      "indicators": 3122,
+      "observations": 575595,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "2011": {
+      "countries": 893,
+      "indicators": 3077,
+      "observations": 571646,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "2012": {
+      "countries": 893,
+      "indicators": 3076,
+      "observations": 571441,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "2013": {
+      "countries": 893,
+      "indicators": 3070,
+      "observations": 570283,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "2014": {
+      "countries": 880,
+      "indicators": 3068,
+      "observations": 569962,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "2015": {
+      "countries": 842,
+      "indicators": 3036,
+      "observations": 563937,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "2016": {
+      "countries": 837,
+      "indicators": 3017,
+      "observations": 561307,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "2017": {
+      "countries": 813,
+      "indicators": 3003,
+      "observations": 557920,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "2018": {
+      "countries": 813,
+      "indicators": 3001,
+      "observations": 557704,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "2019": {
+      "countries": 813,
+      "indicators": 2992,
+      "observations": 556080,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "2020": {
+      "countries": 807,
+      "indicators": 2951,
+      "observations": 549273,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "2021": {
+      "countries": 803,
+      "indicators": 2824,
+      "observations": 529442,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "2022": {
+      "countries": 793,
+      "indicators": 2745,
+      "observations": 515756,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "2023": {
+      "countries": 769,
+      "indicators": 2673,
+      "observations": 502707,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    },
+    "2024": {
+      "countries": 721,
+      "indicators": 2191,
+      "observations": 426168,
+      "usable_for_shap": true,
+      "usable_for_graphs": true
+    }
+  },
+  "recommended_config": {
+    "MIN_YEAR_FOR_SHAP": 1990,
+    "MIN_YEAR_FOR_GRAPHS": 1999,
+    "SHAP_YEARS": [
+      1990,
+      1991,
+      1992,
+      1993,
+      1994,
+      1995,
+      1996,
+      1997,
+      1998,
+      1999,
+      2000,
+      2001,
+      2002,
+      2003,
+      2004,
+      2005,
+      2006,
+      2007,
+      2008,
+      2009,
+      2010,
+      2011,
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+    ],
+    "GRAPH_YEARS": [
+      1999,
+      2000,
+      2001,
+      2002,
+      2003,
+      2004,
+      2005,
+      2006,
+      2007,
+      2008,
+      2009,
+      2010,
+      2011,
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+    ]
+  },
+  "file_estimates": {
+    "temporal_shap": {
+      "countries": 624,
+      "targets": 9,
+      "years": 35,
+      "total_files": 196560
+    },
+    "regional_shap": {
+      "regions": 11,
+      "targets": 9,
+      "years": 35,
+      "total_files": 3465
+    },
+    "temporal_graphs": {
+      "countries": 624,
+      "years": 26,
+      "total_files": 16224
+    },
+    "spillovers": {
+      "years": 35,
+      "total_files": 35
+    },
+    "feedback_loops": {
+      "countries": 624,
+      "total_files": 624
+    },
+    "grand_total": 216908
+  },
+  "country_summary": {
+    "total_in_data": 893,
+    "usable_for_shap": 623,
+    "usable_for_graphs": 623
+  },
+  "thresholds_used": {
+    "MIN_INDICATORS_FOR_SHAP": 50,
+    "MIN_YEARS_FOR_SHAP": 5,
+    "MIN_YEARS_FOR_GRAPHS": 10,
+    "MIN_COUNTRIES_FOR_YEAR": 100
+  }
+}
