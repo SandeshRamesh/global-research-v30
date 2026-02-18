@@ -90,3 +90,6 @@ Thumbs.db
 # ===================
 .env
 .env.local
+
+# Generated baselines (reproducible)
+data/v3_1_baselines/
