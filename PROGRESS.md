@@ -227,7 +227,68 @@ This directly answers: "How important is this indicator to OVERALL quality of li
 
 ---
 
+## Phase 5: Simulation Runner (COMPLETE)
+
+**Status:** COMPLETE
+**Date:** 2026-01-15
+
+### New Components
+
+Created `v3.1/simulation/` package with:
+
+| Module | Description |
+|--------|-------------|
+| `graph_loader_v31.py` | Year-specific graph loading with fallback chain |
+| `income_classifier.py` | Dynamic income classification lookup |
+| `regional_spillovers.py` | Regional spillover effects (11 regions + global powers) |
+| `propagation_v31.py` | Non-linear propagation + ensemble uncertainty |
+| `simulation_runner_v31.py` | Instant simulation (V3.1) |
+| `temporal_simulation_v31.py` | Multi-year temporal simulation |
+
+### Key Features
+
+1. **Year-specific graphs**: Loads different causal graph for each projection year
+2. **Non-linear propagation**: Uses `marginal_effects` (p25/p50/p75) for non-linear edges
+3. **Ensemble uncertainty**: Bootstrap resampling with `uncertainty_multiplier=3.0`
+4. **Regional spillovers**: Formula `regional_effect = direct_effect * spillover_strength`
+5. **P-value filtering**: Default 0.05 threshold for statistically significant edges
+6. **Fallback chain**: country → stratified (by income) → unified
+
+### API Endpoints Added
+
+Updated `viz/phase2/api/` with new V3.1 endpoints:
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/simulate/v31` | POST | Instant simulation with V3.1 graphs |
+| `/api/simulate/v31/temporal` | POST | Temporal simulation with dynamic graphs |
+
+### New Request Parameters
+
+- `view_type`: 'country', 'stratified', or 'unified'
+- `p_value_threshold`: Edge significance filter (0.001-0.10, default 0.05)
+- `use_nonlinear`: Use marginal effects (default: true)
+- `n_ensemble_runs`: 0 for point estimate, 100+ for CIs
+- `include_spillovers`: Include regional spillover effects
+- `use_dynamic_graphs`: Load year-specific graph per year (temporal only)
+
+### Response Enhancements
+
+- `income_classification`: Country's income group at simulation year
+- `spillovers`: Regional and global spillover effects
+- `ensemble`: Convergence stats when ensemble runs > 0
+- `graphs_used`: Which view was used for each year (temporal)
+
+---
+
 ## Log
+
+### 2026-01-15 (Simulation Runner)
+- **Phase 5: Simulation runner COMPLETE**
+- Created v3.1/simulation/ package with 7 modules
+- Added V3.1 API endpoints: /api/simulate/v31, /api/simulate/v31/temporal
+- Features: non-linear propagation, ensemble uncertainty, regional spillovers
+- Tests passing for instant and temporal simulation
 
 ### 2026-01-15 (Final)
 - **Phase 4 validation PASSED** - System certified for production

@@ -1,0 +1,1313 @@
+{
+  "generated": "2024-01-16",
+  "summary": {
+    "countries_with_transitions": 76,
+    "total_transitions": 141,
+    "upgrades": 104,
+    "downgrades": 37
+  },
+  "transitions": {
+    "Albania": {
+      "iso3": "ALB",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2008,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 4160.0
+        }
+      ]
+    },
+    "Algeria": {
+      "iso3": "DZA",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2007,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3780.0
+        },
+        {
+          "year": 2020,
+          "from": "emerging",
+          "to": "developing",
+          "gni_at_transition": 4020.0
+        },
+        {
+          "year": 2021,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 4120.0
+        }
+      ]
+    },
+    "Angola": {
+      "iso3": "AGO",
+      "current_stratum": "developing",
+      "transitions": [
+        {
+          "year": 2012,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 4750.0
+        },
+        {
+          "year": 2016,
+          "from": "emerging",
+          "to": "developing",
+          "gni_at_transition": 2910.0
+        }
+      ]
+    },
+    "Argentina": {
+      "iso3": "ARG",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2013,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 12760.0
+        },
+        {
+          "year": 2014,
+          "from": "advanced",
+          "to": "emerging",
+          "gni_at_transition": 12240.0
+        },
+        {
+          "year": 2015,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 12500.0
+        },
+        {
+          "year": 2016,
+          "from": "advanced",
+          "to": "emerging",
+          "gni_at_transition": 12130.0
+        },
+        {
+          "year": 2017,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 13070.0
+        },
+        {
+          "year": 2019,
+          "from": "advanced",
+          "to": "emerging",
+          "gni_at_transition": 11210.0
+        }
+      ]
+    },
+    "Armenia": {
+      "iso3": "ARM",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2017,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3900.0
+        }
+      ]
+    },
+    "Azerbaijan": {
+      "iso3": "AZE",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2008,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3900.0
+        }
+      ]
+    },
+    "Barbados": {
+      "iso3": "BRB",
+      "current_stratum": "advanced",
+      "transitions": [
+        {
+          "year": 1991,
+          "from": "advanced",
+          "to": "emerging",
+          "gni_at_transition": 7640.0
+        },
+        {
+          "year": 1998,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 9670.0
+        }
+      ]
+    },
+    "Belarus": {
+      "iso3": "BLR",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2007,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 4310.0
+        }
+      ]
+    },
+    "Bolivia": {
+      "iso3": "BOL",
+      "current_stratum": "developing",
+      "transitions": [
+        {
+          "year": 2019,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 4170.0
+        },
+        {
+          "year": 2020,
+          "from": "emerging",
+          "to": "developing",
+          "gni_at_transition": 3620.0
+        }
+      ]
+    },
+    "Bosnia and Herzegovina": {
+      "iso3": "BIH",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2008,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 4500.0
+        }
+      ]
+    },
+    "Botswana": {
+      "iso3": "BWA",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2002,
+          "from": "emerging",
+          "to": "developing",
+          "gni_at_transition": 2860.0
+        },
+        {
+          "year": 2003,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3300.0
+        }
+      ]
+    },
+    "Brazil": {
+      "iso3": "BRA",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 1991,
+          "from": "emerging",
+          "to": "developing",
+          "gni_at_transition": 2530.0
+        },
+        {
+          "year": 1995,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3440.0
+        },
+        {
+          "year": 2003,
+          "from": "emerging",
+          "to": "developing",
+          "gni_at_transition": 3010.0
+        },
+        {
+          "year": 2004,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3370.0
+        },
+        {
+          "year": 2013,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 12950.0
+        },
+        {
+          "year": 2014,
+          "from": "advanced",
+          "to": "emerging",
+          "gni_at_transition": 12280.0
+        }
+      ]
+    },
+    "Bulgaria": {
+      "iso3": "BGR",
+      "current_stratum": "advanced",
+      "transitions": [
+        {
+          "year": 2005,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3800.0
+        },
+        {
+          "year": 2023,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 14240.0
+        }
+      ]
+    },
+    "Cape Verde": {
+      "iso3": "CPV",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2018,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 4040.0
+        },
+        {
+          "year": 2020,
+          "from": "emerging",
+          "to": "developing",
+          "gni_at_transition": 3510.0
+        },
+        {
+          "year": 2022,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 4550.0
+        }
+      ]
+    },
+    "Chile": {
+      "iso3": "CHL",
+      "current_stratum": "advanced",
+      "transitions": [
+        {
+          "year": 1991,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 2600.0
+        },
+        {
+          "year": 2012,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 14170.0
+        }
+      ]
+    },
+    "China": {
+      "iso3": "CHN",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2010,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 4410.0
+        }
+      ]
+    },
+    "Colombia": {
+      "iso3": "COL",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2007,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 4170.0
+        }
+      ]
+    },
+    "Costa Rica": {
+      "iso3": "CRI",
+      "current_stratum": "advanced",
+      "transitions": [
+        {
+          "year": 1994,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 2990.0
+        },
+        {
+          "year": 2022,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 13210.0
+        }
+      ]
+    },
+    "Croatia": {
+      "iso3": "HRV",
+      "current_stratum": "advanced",
+      "transitions": [
+        {
+          "year": 2006,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 11240.0
+        }
+      ]
+    },
+    "Cuba": {
+      "iso3": "CUB",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 1991,
+          "from": "emerging",
+          "to": "developing",
+          "gni_at_transition": 2330.0
+        },
+        {
+          "year": 2003,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3100.0
+        }
+      ]
+    },
+    "Czech Republic": {
+      "iso3": "CZE",
+      "current_stratum": "advanced",
+      "transitions": [
+        {
+          "year": 2004,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 10280.0
+        }
+      ]
+    },
+    "Dominican Republic": {
+      "iso3": "DOM",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2007,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 4380.0
+        }
+      ]
+    },
+    "Ecuador": {
+      "iso3": "ECU",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2009,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3970.0
+        }
+      ]
+    },
+    "El Salvador": {
+      "iso3": "SLV",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2019,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 4130.0
+        },
+        {
+          "year": 2020,
+          "from": "emerging",
+          "to": "developing",
+          "gni_at_transition": 3800.0
+        },
+        {
+          "year": 2021,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 4380.0
+        }
+      ]
+    },
+    "Equatorial Guinea": {
+      "iso3": "GNQ",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2006,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 6420.0
+        }
+      ]
+    },
+    "Estonia": {
+      "iso3": "EST",
+      "current_stratum": "advanced",
+      "transitions": [
+        {
+          "year": 1996,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3370.0
+        },
+        {
+          "year": 2006,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 11500.0
+        }
+      ]
+    },
+    "Fiji": {
+      "iso3": "FJI",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2013,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 4460.0
+        }
+      ]
+    },
+    "Gabon": {
+      "iso3": "GAB",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2000,
+          "from": "emerging",
+          "to": "developing",
+          "gni_at_transition": 2980.0
+        },
+        {
+          "year": 2001,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3290.0
+        }
+      ]
+    },
+    "Georgia": {
+      "iso3": "GEO",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2012,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 4250.0
+        }
+      ]
+    },
+    "Guatemala": {
+      "iso3": "GTM",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2017,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3980.0
+        }
+      ]
+    },
+    "Guyana": {
+      "iso3": "GUY",
+      "current_stratum": "advanced",
+      "transitions": [
+        {
+          "year": 2009,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 4160.0
+        },
+        {
+          "year": 2023,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 17770.0
+        }
+      ]
+    },
+    "Hungary": {
+      "iso3": "HUN",
+      "current_stratum": "advanced",
+      "transitions": [
+        {
+          "year": 2006,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 11230.0
+        }
+      ]
+    },
+    "Indonesia": {
+      "iso3": "IDN",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2021,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 4130.0
+        }
+      ]
+    },
+    "Iran, Islamic Rep.": {
+      "iso3": "IRN",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2007,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 4070.0
+        },
+        {
+          "year": 2020,
+          "from": "emerging",
+          "to": "developing",
+          "gni_at_transition": 3980.0
+        },
+        {
+          "year": 2021,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 4110.0
+        }
+      ]
+    },
+    "Iraq": {
+      "iso3": "IRQ",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 1991,
+          "from": "emerging",
+          "to": "developing",
+          "gni_at_transition": 70.0
+        },
+        {
+          "year": 2009,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 4010.0
+        }
+      ]
+    },
+    "Jamaica": {
+      "iso3": "JAM",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 1999,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3170.0
+        }
+      ]
+    },
+    "Jordan": {
+      "iso3": "JOR",
+      "current_stratum": "developing",
+      "transitions": [
+        {
+          "year": 2017,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3920.0
+        },
+        {
+          "year": 2020,
+          "from": "emerging",
+          "to": "developing",
+          "gni_at_transition": 4070.0
+        },
+        {
+          "year": 2021,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 4240.0
+        },
+        {
+          "year": 2023,
+          "from": "emerging",
+          "to": "developing",
+          "gni_at_transition": 4450.0
+        }
+      ]
+    },
+    "Kazakhstan": {
+      "iso3": "KAZ",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2006,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3670.0
+        }
+      ]
+    },
+    "Korea, Rep.": {
+      "iso3": "KOR",
+      "current_stratum": "advanced",
+      "transitions": [
+        {
+          "year": 1992,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 8580.0
+        }
+      ]
+    },
+    "Kosovo": {
+      "iso3": "XKX",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2017,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3950.0
+        }
+      ]
+    },
+    "Latvia": {
+      "iso3": "LVA",
+      "current_stratum": "advanced",
+      "transitions": [
+        {
+          "year": 2000,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3240.0
+        },
+        {
+          "year": 2008,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 12830.0
+        },
+        {
+          "year": 2010,
+          "from": "advanced",
+          "to": "emerging",
+          "gni_at_transition": 12250.0
+        },
+        {
+          "year": 2012,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 13430.0
+        }
+      ]
+    },
+    "Lebanon": {
+      "iso3": "LBN",
+      "current_stratum": "developing",
+      "transitions": [
+        {
+          "year": 1996,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3330.0
+        },
+        {
+          "year": 2022,
+          "from": "emerging",
+          "to": "developing",
+          "gni_at_transition": 4130.0
+        }
+      ]
+    },
+    "Libya": {
+      "iso3": "LBY",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2008,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 12020.0
+        },
+        {
+          "year": 2009,
+          "from": "advanced",
+          "to": "emerging",
+          "gni_at_transition": 11140.0
+        },
+        {
+          "year": 2012,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 13310.0
+        },
+        {
+          "year": 2013,
+          "from": "advanced",
+          "to": "emerging",
+          "gni_at_transition": 11960.0
+        }
+      ]
+    },
+    "Lithuania": {
+      "iso3": "LTU",
+      "current_stratum": "advanced",
+      "transitions": [
+        {
+          "year": 2000,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3220.0
+        },
+        {
+          "year": 2008,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 12670.0
+        }
+      ]
+    },
+    "Malaysia": {
+      "iso3": "MYS",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 1991,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 2590.0
+        }
+      ]
+    },
+    "Maldives": {
+      "iso3": "MDV",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2003,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3470.0
+        }
+      ]
+    },
+    "Malta": {
+      "iso3": "MLT",
+      "current_stratum": "advanced",
+      "transitions": [
+        {
+          "year": 1991,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 7940.0
+        },
+        {
+          "year": 1993,
+          "from": "advanced",
+          "to": "emerging",
+          "gni_at_transition": 8570.0
+        },
+        {
+          "year": 1996,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 10080.0
+        }
+      ]
+    },
+    "Mauritius": {
+      "iso3": "MUS",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 1991,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 2650.0
+        },
+        {
+          "year": 2019,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 12700.0
+        },
+        {
+          "year": 2020,
+          "from": "advanced",
+          "to": "emerging",
+          "gni_at_transition": 10760.0
+        }
+      ]
+    },
+    "Moldova": {
+      "iso3": "MDA",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2019,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 4490.0
+        }
+      ]
+    },
+    "Mongolia": {
+      "iso3": "MNG",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2013,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 4310.0
+        },
+        {
+          "year": 2015,
+          "from": "emerging",
+          "to": "developing",
+          "gni_at_transition": 3770.0
+        },
+        {
+          "year": 2022,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 4340.0
+        }
+      ]
+    },
+    "Montenegro": {
+      "iso3": "MNE",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2005,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3660.0
+        }
+      ]
+    },
+    "Namibia": {
+      "iso3": "NAM",
+      "current_stratum": "developing",
+      "transitions": [
+        {
+          "year": 2005,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3480.0
+        },
+        {
+          "year": 2023,
+          "from": "emerging",
+          "to": "developing",
+          "gni_at_transition": 4290.0
+        }
+      ]
+    },
+    "North Macedonia": {
+      "iso3": "MKD",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2007,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3730.0
+        }
+      ]
+    },
+    "Oman": {
+      "iso3": "OMN",
+      "current_stratum": "advanced",
+      "transitions": [
+        {
+          "year": 2002,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 9210.0
+        }
+      ]
+    },
+    "Panama": {
+      "iso3": "PAN",
+      "current_stratum": "advanced",
+      "transitions": [
+        {
+          "year": 2015,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 12570.0
+        }
+      ]
+    },
+    "Paraguay": {
+      "iso3": "PRY",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2010,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 4410.0
+        }
+      ]
+    },
+    "Peru": {
+      "iso3": "PER",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2009,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3950.0
+        }
+      ]
+    },
+    "Poland": {
+      "iso3": "POL",
+      "current_stratum": "advanced",
+      "transitions": [
+        {
+          "year": 1995,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3300.0
+        },
+        {
+          "year": 2008,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 11980.0
+        }
+      ]
+    },
+    "Portugal": {
+      "iso3": "PRT",
+      "current_stratum": "advanced",
+      "transitions": [
+        {
+          "year": 1991,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 8180.0
+        }
+      ]
+    },
+    "Romania": {
+      "iso3": "ROU",
+      "current_stratum": "advanced",
+      "transitions": [
+        {
+          "year": 2005,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3880.0
+        },
+        {
+          "year": 2019,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 12660.0
+        }
+      ]
+    },
+    "Russia": {
+      "iso3": "RUS",
+      "current_stratum": "advanced",
+      "transitions": [
+        {
+          "year": 1994,
+          "from": "emerging",
+          "to": "developing",
+          "gni_at_transition": 2650.0
+        },
+        {
+          "year": 2004,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3410.0
+        },
+        {
+          "year": 2012,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 13470.0
+        },
+        {
+          "year": 2015,
+          "from": "advanced",
+          "to": "emerging",
+          "gni_at_transition": 11740.0
+        },
+        {
+          "year": 2023,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 14460.0
+        }
+      ]
+    },
+    "Serbia": {
+      "iso3": "SRB",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 1999,
+          "from": "emerging",
+          "to": "developing",
+          "gni_at_transition": 2800.0
+        },
+        {
+          "year": 2004,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3340.0
+        }
+      ]
+    },
+    "Seychelles": {
+      "iso3": "SYC",
+      "current_stratum": "advanced",
+      "transitions": [
+        {
+          "year": 2005,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 11850.0
+        },
+        {
+          "year": 2008,
+          "from": "advanced",
+          "to": "emerging",
+          "gni_at_transition": 11520.0
+        },
+        {
+          "year": 2014,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 13340.0
+        }
+      ]
+    },
+    "Slovakia": {
+      "iso3": "SVK",
+      "current_stratum": "advanced",
+      "transitions": [
+        {
+          "year": 1993,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3000.0
+        },
+        {
+          "year": 2005,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 11310.0
+        }
+      ]
+    },
+    "Slovenia": {
+      "iso3": "SVN",
+      "current_stratum": "advanced",
+      "transitions": [
+        {
+          "year": 1995,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 9410.0
+        }
+      ]
+    },
+    "South Africa": {
+      "iso3": "ZAF",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2002,
+          "from": "emerging",
+          "to": "developing",
+          "gni_at_transition": 2870.0
+        },
+        {
+          "year": 2003,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3160.0
+        }
+      ]
+    },
+    "Sri Lanka": {
+      "iso3": "LKA",
+      "current_stratum": "developing",
+      "transitions": [
+        {
+          "year": 2016,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 4020.0
+        },
+        {
+          "year": 2020,
+          "from": "emerging",
+          "to": "developing",
+          "gni_at_transition": 3880.0
+        }
+      ]
+    },
+    "Suriname": {
+      "iso3": "SUR",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2006,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3880.0
+        }
+      ]
+    },
+    "Thailand": {
+      "iso3": "THA",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2008,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3900.0
+        }
+      ]
+    },
+    "Trinidad and Tobago": {
+      "iso3": "TTO",
+      "current_stratum": "advanced",
+      "transitions": [
+        {
+          "year": 2005,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 11200.0
+        }
+      ]
+    },
+    "Tunisia": {
+      "iso3": "TUN",
+      "current_stratum": "developing",
+      "transitions": [
+        {
+          "year": 2009,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 4020.0
+        },
+        {
+          "year": 2016,
+          "from": "emerging",
+          "to": "developing",
+          "gni_at_transition": 3930.0
+        }
+      ]
+    },
+    "Turkmenistan": {
+      "iso3": "TKM",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2011,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 4300.0
+        }
+      ]
+    },
+    "T\u00fcrkiye": {
+      "iso3": "TUR",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 1992,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 2830.0
+        },
+        {
+          "year": 1994,
+          "from": "emerging",
+          "to": "developing",
+          "gni_at_transition": 2570.0
+        },
+        {
+          "year": 1996,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3410.0
+        }
+      ]
+    },
+    "Ukraine": {
+      "iso3": "UKR",
+      "current_stratum": "emerging",
+      "transitions": [
+        {
+          "year": 2023,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 4980.0
+        }
+      ]
+    },
+    "Uruguay": {
+      "iso3": "URY",
+      "current_stratum": "advanced",
+      "transitions": [
+        {
+          "year": 2011,
+          "from": "emerging",
+          "to": "advanced",
+          "gni_at_transition": 12730.0
+        }
+      ]
+    },
+    "Venezuela, RB": {
+      "iso3": "VEN",
+      "current_stratum": "unknown",
+      "transitions": [
+        {
+          "year": 1994,
+          "from": "emerging",
+          "to": "developing",
+          "gni_at_transition": 2710.0
+        },
+        {
+          "year": 1997,
+          "from": "developing",
+          "to": "emerging",
+          "gni_at_transition": 3430.0
+        },
+        {
+          "year": 2016,
+          "from": "emerging",
+          "to": "developing",
+          "gni_at_transition": 3680.0
+        }
+      ]
+    }
+  }
+}
