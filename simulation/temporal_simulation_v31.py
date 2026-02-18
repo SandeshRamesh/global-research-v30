@@ -41,16 +41,17 @@ ViewType = Literal['country', 'stratified', 'unified']
 
 def propagate_temporal_v31(
     country: str,
-    intervention: Dict[str, float],
-    baseline_values: Dict[str, float],
-    base_year: int,
+    intervention: Optional[Dict[str, float]] = None,
+    baseline_values: Dict[str, float] = None,
+    base_year: int = 2024,
     horizon_years: int = 10,
     view_type: ViewType = 'country',
     p_value_threshold: float = 0.05,
     use_nonlinear: bool = True,
     use_dynamic_graphs: bool = True,
     dampening_factor: float = 0.5,
-    max_percent_change: float = 100.0
+    max_percent_change: float = 100.0,
+    interventions_by_year: Optional[Dict[int, Dict[str, float]]] = None
 ) -> dict:
     """
     Propagate intervention across multiple years using year-specific graphs.
@@ -58,9 +59,12 @@ def propagate_temporal_v31(
     Key difference from instant simulation: loads a new graph for each
     projection year, accounting for evolving causal relationships.
 
+    Supports staggered interventions: different indicators can be intervened
+    at different years via interventions_by_year.
+
     Args:
         country: Country name
-        intervention: {indicator: absolute_delta}
+        intervention: {indicator: absolute_delta} — all applied at base_year (legacy)
         baseline_values: {indicator: baseline_value}
         base_year: Starting year (intervention year)
         horizon_years: Years to project forward
@@ -70,6 +74,7 @@ def propagate_temporal_v31(
         use_dynamic_graphs: Load year-specific graph for each year
         dampening_factor: Effect dampening
         max_percent_change: Maximum change cap
+        interventions_by_year: {year: {indicator: absolute_delta}} — staggered interventions
 
     Returns:
         Dict with:
@@ -83,19 +88,26 @@ def propagate_temporal_v31(
     graphs_used = {}
     converged_years = []
 
-    # Initialize year 0 (intervention year)
+    # Build interventions_by_year from legacy param if not provided
+    if interventions_by_year is None:
+        interventions_by_year = {}
+        if intervention:
+            interventions_by_year[base_year] = intervention
+
+    # Initialize year 0 (base year)
     current_values = dict(baseline_values)
     current_deltas = defaultdict(float)
 
-    # Apply initial intervention
-    for indicator, delta in intervention.items():
-        if indicator not in baseline_values:
-            continue
-        base = baseline_values[indicator]
-        new_val = base + delta
-        saturated = apply_saturation(indicator, new_val, base)
-        current_values[indicator] = saturated
-        current_deltas[indicator] = saturated - base
+    # Apply interventions scheduled for the base year
+    if base_year in interventions_by_year:
+        for indicator, delta in interventions_by_year[base_year].items():
+            if indicator not in baseline_values:
+                continue
+            base = baseline_values[indicator]
+            new_val = base + delta
+            saturated = apply_saturation(indicator, new_val, base)
+            current_values[indicator] = saturated
+            current_deltas[indicator] = saturated - base
 
     timeline[base_year] = dict(current_values)
     deltas_timeline[base_year] = dict(current_deltas)
@@ -135,6 +147,17 @@ def propagate_temporal_v31(
 
         # Build adjacency for this year
         adjacency = build_adjacency_v31(graph)
+
+        # Inject any staggered interventions scheduled for this year
+        if actual_year in interventions_by_year:
+            for indicator, delta in interventions_by_year[actual_year].items():
+                if indicator not in baseline_values:
+                    continue
+                base = baseline_values[indicator]
+                new_val = base + delta
+                saturated = apply_saturation(indicator, new_val, base)
+                current_values[indicator] = saturated
+                current_deltas[indicator] = saturated - base
 
         # Compute effects for this year based on lagged changes
         new_deltas = defaultdict(float, current_deltas)
@@ -253,18 +276,20 @@ def run_temporal_simulation_v31(
                 'message': f"No baseline data for '{country}' in year {base_year}"
             }
 
-        # Convert interventions
-        intervention_dict = {}
+        # Convert interventions — group by year for staggered support
+        interventions_by_year: Dict[int, Dict[str, float]] = defaultdict(dict)
         intervention_details = []
 
         for intv in interventions:
             indicator = intv.get('indicator')
             change_percent = intv.get('change_percent', 0)
+            intervention_year = intv.get('intervention_year', base_year)
 
             if indicator not in baseline:
                 intervention_details.append({
                     'indicator': indicator,
                     'change_percent': change_percent,
+                    'intervention_year': intervention_year,
                     'status': 'skipped',
                     'reason': 'not_in_baseline'
                 })
@@ -272,33 +297,41 @@ def run_temporal_simulation_v31(
 
             base_val = baseline[indicator]
             delta = base_val * (change_percent / 100)
-            intervention_dict[indicator] = delta
+            interventions_by_year[intervention_year][indicator] = delta
 
             intervention_details.append({
                 'indicator': indicator,
                 'baseline': base_val,
                 'change_percent': change_percent,
                 'change_absolute': delta,
+                'intervention_year': intervention_year,
                 'status': 'applied'
             })
 
-        if not intervention_dict:
+        if not interventions_by_year:
             return {
                 'status': 'error',
                 'message': 'No valid interventions'
             }
 
+        # Compute effective base_year and horizon from staggered interventions
+        all_intervention_years = list(interventions_by_year.keys())
+        effective_base_year = min(all_intervention_years)
+        max_intervention_year = max(all_intervention_years)
+        # Ensure horizon covers from earliest intervention to latest + horizon_years
+        effective_horizon = max(horizon_years, (max_intervention_year - effective_base_year) + horizon_years)
+
         # Run temporal propagation
         result = propagate_temporal_v31(
             country=country,
-            intervention=intervention_dict,
             baseline_values=baseline,
-            base_year=base_year,
-            horizon_years=horizon_years,
+            base_year=effective_base_year,
+            horizon_years=effective_horizon,
             view_type=view_type,
             p_value_threshold=p_value_threshold,
             use_nonlinear=use_nonlinear,
-            use_dynamic_graphs=use_dynamic_graphs
+            use_dynamic_graphs=use_dynamic_graphs,
+            interventions_by_year=dict(interventions_by_year)
         )
 
         # Compute effects for each year
@@ -321,8 +354,8 @@ def run_temporal_simulation_v31(
         response = {
             'status': 'success',
             'country': country,
-            'base_year': year_used or base_year,
-            'horizon_years': horizon_years,
+            'base_year': year_used or effective_base_year,
+            'horizon_years': effective_horizon,
             'view_type': view_type,
             'interventions': intervention_details,
             'timeline': result['timeline'],
@@ -341,7 +374,7 @@ def run_temporal_simulation_v31(
 
         # Add spillovers for final year if enabled
         if include_spillovers:
-            final_year = base_year + horizon_years
+            final_year = effective_base_year + effective_horizon
             final_effects = effects_by_year.get(final_year, {})
             abs_effects = {ind: eff.get('absolute_change', 0) for ind, eff in final_effects.items()}
             spillovers = compute_regional_spillover(country, abs_effects)
