@@ -26,12 +26,15 @@ V3_temporal_simulation/
 │   ├── raw/                    # V2.0 and V2.1 imports
 │   ├── processed/              # Country-specific splits
 │   │   └── countries/          # 217 .parquet files
-│   └── country_graphs/         # 217 .json files
+│   ├── country_graphs/         # 217 .json files (causal graphs)
+│   └── country_shap/           # 217 .json files (SHAP importance)
 ├── scripts/
 │   ├── import_v2_data.py       # Phase 0.3
-│   ├── split_countries.py      # Phase A.1
-│   ├── estimate_country_graphs.py  # Phase A.2
-│   ├── validate_country_graphs.py  # Phase A.3
+│   ├── phaseA/
+│   │   ├── A1_split_panel/     # Split panel by country
+│   │   ├── A2_estimate_graphs/ # Country-specific edge weights
+│   │   ├── A3_validate_graphs/ # DAG validation
+│   │   └── A4_country_shap/    # Country-specific SHAP importance
 │   ├── saturation_functions.py     # Phase B.1
 │   ├── intervention_propagation.py # Phase B.2
 │   ├── simulation_runner.py        # Phase B.3
@@ -102,9 +105,11 @@ pip install -r requirements.txt
 python scripts/import_v2_data.py
 
 # Phase A: Country graphs
-python scripts/split_countries.py
-python scripts/estimate_country_graphs.py  # WARNING: 2-3 days
-python scripts/validate_country_graphs.py
+python scripts/phaseA/A1_split_panel/split_by_country.py
+python scripts/phaseA/A2_estimate_graphs/estimate_country_graphs.py  # WARNING: 2-3 days
+python scripts/phaseA/A3_validate_graphs/validate_all_graphs.py
+python scripts/phaseA/A4_country_shap/compute_country_shap.py  # ~1-2 hours
+python scripts/phaseA/A4_country_shap/validate_country_shap.py
 
 # Phase B: Intervention
 python scripts/saturation_functions.py  # Test saturation
@@ -149,6 +154,26 @@ CSV/Parquet with columns: `country_code`, `year`, plus 2,500 indicator columns.
 }
 ```
 
+### Output: Country SHAP (per country)
+```json
+{
+  "country": "RWA",
+  "shap_importance": {
+    "indicator_id_1": 0.234,
+    "indicator_id_2": 0.156,
+    "...": "..."
+  },
+  "metadata": {
+    "n_indicators": 1247,
+    "n_samples": 35,
+    "qol_components": ["Life Expectancy", "GDP per Capita", "..."],
+    "mean_importance": 0.00063,
+    "max_importance": 1.0,
+    "computation_date": "2025-12-30T..."
+  }
+}
+```
+
 ### Output: Simulation Response
 ```json
 {
@@ -187,7 +212,8 @@ V20_PANEL = "../v2.0/phaseA/A0_data_acquisition/outputs/merged_panel.parquet"
 
 ## Validation Targets
 
-- **Phase A**: 217 country graphs, all DAGs (no cycles), edge counts >0
+- **Phase A.1-A.3**: 217 country graphs, all DAGs (no cycles), edge counts >0
+- **Phase A.4**: 180+ country SHAP files, values in [0,1], countries show heterogeneity
 - **Phase B**: Saturation tests pass, propagation converges in <10 iterations
 - **Phase C**: Significant lags found for >50% of edges
 - **Phase E**: Historical validation r² > 0.5 on known policy changes

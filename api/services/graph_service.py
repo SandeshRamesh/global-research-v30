@@ -13,7 +13,7 @@ from functools import lru_cache
 import sys
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / 'scripts' / 'phaseB' / 'B3_simulation'))
 
-from ..config import GRAPHS_DIR, PANEL_PATH
+from ..config import GRAPHS_DIR, PANEL_PATH, COUNTRY_SHAP_DIR
 
 
 class GraphService:
@@ -21,6 +21,7 @@ class GraphService:
 
     def __init__(self):
         self._graph_cache: Dict[str, dict] = {}
+        self._shap_cache: Dict[str, Dict[str, float]] = {}
         self._panel_df: Optional[pd.DataFrame] = None
         self._countries: Optional[List[str]] = None
 
@@ -93,6 +94,27 @@ class GraphService:
     def country_exists(self, country: str) -> bool:
         """Check if country graph exists."""
         return (GRAPHS_DIR / f"{country}.json").exists()
+
+    def get_country_shap(self, country: str) -> Dict[str, float]:
+        """Get country-specific SHAP importance values (cached).
+
+        Returns indicator_id -> importance (0-1 normalized).
+        Falls back to empty dict if country SHAP file doesn't exist.
+        """
+        if country not in self._shap_cache:
+            shap_path = COUNTRY_SHAP_DIR / f"{country}_shap.json"
+            if not shap_path.exists():
+                # No country SHAP available, return empty
+                self._shap_cache[country] = {}
+            else:
+                try:
+                    with open(shap_path) as f:
+                        data = json.load(f)
+                    self._shap_cache[country] = data.get('shap_importance', {})
+                except Exception:
+                    self._shap_cache[country] = {}
+
+        return self._shap_cache[country]
 
     def get_graph_stats(self) -> dict:
         """Get aggregate statistics across all graphs."""

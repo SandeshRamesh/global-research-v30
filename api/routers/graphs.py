@@ -44,18 +44,24 @@ async def get_country_graph(
     # Get baseline values
     baseline = graph_service.get_baseline_values(country, year)
 
+    # Get country-specific SHAP importance for node sizing
+    shap_importance = graph_service.get_country_shap(country)
+
     return GraphResponse(
         country=country,
         n_edges=graph.get('n_edges', 0),
         n_edges_with_data=graph.get('n_edges_with_data', 0),
         edges=graph.get('edges', []),
         baseline=baseline,
+        shap_importance=shap_importance,
         metadata={
             'year': year or 'latest',
             'has_lag_data': any('lag' in e for e in graph.get('edges', [])),
             'n_significant_lags': sum(
                 1 for e in graph.get('edges', [])
                 if e.get('lag_significant', False)
-            )
+            ),
+            'has_country_shap': len(shap_importance) > 0,
+            'n_shap_indicators': len(shap_importance)
         }
     )

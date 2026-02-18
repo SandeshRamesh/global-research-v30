@@ -43,11 +43,13 @@ logs/
 data/raw/*.parquet
 data/raw/*.csv
 data/country_graphs/*.json
+data/country_shap/*.json
 data/processed/countries/*.parquet
 
 # Keep structure
 !data/raw/.gitkeep
 !data/country_graphs/.gitkeep
+!data/country_shap/.gitkeep
 !data/processed/countries/.gitkeep
 
 # OS

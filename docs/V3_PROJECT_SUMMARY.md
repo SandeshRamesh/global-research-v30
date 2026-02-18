@@ -16,6 +16,7 @@ V3.0 transforms the V2.1 unified causal graph into an actionable policy simulati
 | Deliverable | Status | Description |
 |-------------|--------|-------------|
 | Country Graphs | ✅ Complete | 217 country-specific causal graphs (JSON) |
+| Country SHAP | ✅ Complete | 174 country-specific SHAP importance scores |
 | Temporal Simulation | ✅ Complete | Lag-aware effect propagation (1-5 year lags) |
 | REST API | ✅ Complete | FastAPI backend for simulation queries |
 | Historical Validation | ✅ Complete | 30 backtests with multiple accuracy metrics |
@@ -37,7 +38,8 @@ Phase 0: Data Import
 Phase A: Country Graph Estimation
 ├── A.1 Split panel by country
 ├── A.2 Estimate country-specific edge weights (Lasso regression)
-└── A.3 Validate DAG structure (no cycles)
+├── A.3 Validate DAG structure (no cycles)
+└── A.4 Country-specific SHAP importance (174 countries)
          │
          ▼
 Phase B: Intervention Propagation
@@ -178,6 +180,10 @@ v3.0/
 │
 ├── scripts/
 │   ├── phaseA/                 # Country graph estimation
+│   │   ├── A1_split_panel/     # Split panel by country
+│   │   ├── A2_estimate_graphs/ # Lasso edge weight estimation
+│   │   ├── A3_validate_graphs/ # DAG validation
+│   │   └── A4_country_shap/    # Country-specific SHAP importance
 │   ├── phaseB/                 # Intervention propagation
 │   │   ├── B1_saturation/      # Saturation functions
 │   │   ├── B2_propagation/     # Effect propagation
@@ -198,7 +204,8 @@ v3.0/
 ├── data/
 │   ├── raw/                    # V2.0/V2.1 imports
 │   │   └── v21_panel_data_for_v3.parquet
-│   └── country_graphs/         # 217 country graphs (JSON)
+│   ├── country_graphs/         # 217 country graphs (JSON)
+│   └── country_shap/           # 174 country SHAP files (JSON)
 │
 ├── outputs/
 │   ├── phaseE/                 # Validation results

@@ -14,6 +14,7 @@ ENV = os.getenv("API_ENV", "development")  # development, staging, production
 PROJECT_ROOT = Path(__file__).parent.parent
 DATA_DIR = PROJECT_ROOT / "data"
 GRAPHS_DIR = DATA_DIR / "country_graphs"
+COUNTRY_SHAP_DIR = DATA_DIR / "country_shap"  # Country-specific SHAP importance
 RAW_DIR = DATA_DIR / "raw"
 PANEL_PATH = RAW_DIR / "v21_panel_data_for_v3.parquet"
 NODES_PATH = RAW_DIR / "v21_nodes.csv"

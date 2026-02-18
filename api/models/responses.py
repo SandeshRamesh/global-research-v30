@@ -50,6 +50,10 @@ class GraphResponse(BaseModel):
         ...,
         description="Current indicator values"
     )
+    shap_importance: Dict[str, float] = Field(
+        default_factory=dict,
+        description="Country-specific SHAP importance for node sizing (0-1 normalized)"
+    )
     metadata: Dict[str, Any]
 
 
