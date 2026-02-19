@@ -13,6 +13,8 @@ from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Literal
 import numpy as np
 
+from .indicator_stats import get_indicator_stats, get_country_indicator_stats
+
 # Add V3.0 saturation functions to path
 V30_ROOT = Path(__file__).parent.parent.parent / "v3.0"
 sys.path.insert(0, str(V30_ROOT / "scripts" / "phaseB" / "B1_saturation"))
@@ -20,16 +22,78 @@ sys.path.insert(0, str(V30_ROOT / "scripts" / "phaseB" / "B1_saturation"))
 try:
     from saturation_functions import apply_saturation
 except ImportError:
-    # Fallback: inline basic saturation
+    # Fallback: inline saturation with conservative prefix/suffix matching
+    # Kept in sync with saturation_functions.py SATURATION_CONFIG
     def apply_saturation(indicator: str, value: float, baseline: float) -> float:
-        """Basic saturation fallback."""
-        indicator_lower = indicator.lower()
-        # Hard cap for rates
-        if any(p in indicator_lower for p in ['rate', 'literacy', 'enrollment', 'mortality']):
+        """Saturation fallback with conservative prefix/suffix matching."""
+        ind = indicator.lower()
+
+        # Growth rates / ratios can legitimately be negative — skip
+        if any(ind.endswith(s) for s in ['.zg', '.zs']):
+            return value
+
+        # True percentage rates (specific WDI prefixes)
+        rate_prefixes = [
+            'se.prm.enrr', 'se.sec.enrr', 'se.ter.enrr',
+            'se.prm.cmpt', 'se.sec.cmpt',
+            'sh.dyn.mort', 'sh.dyn.nmrt', 'sp.dyn.cdrt',
+            'sp.dyn.tfrt', 'sh.sta.mmrt',
+            'sh.h2o.', 'sh.sta.hygn', 'sh.sta.bass',
+        ]
+        if any(ind.startswith(p) for p in rate_prefixes):
             return float(np.clip(value, 0, 100))
-        # Hard cap for indices
-        if any(p in indicator_lower for p in ['v2x_', 'index', 'score']):
+
+        # Life expectancy
+        if ind.startswith('sp.dyn.le00'):
+            return float(np.clip(value, 25, 95))
+
+        # V-Dem aggregate indices (explicit prefixes, 0-1)
+        vdem_idx_prefixes = [
+            'v2x_polyarchy', 'v2x_libdem', 'v2x_partipdem', 'v2x_delibdem',
+            'v2x_egaldem', 'v2x_liberal', 'v2x_cspart', 'v2x_rule',
+            'v2x_freexp', 'v2x_frassoc', 'v2x_suffr', 'v2x_elecoff',
+            'v2xel_frefair', 'v2xed_ed_', 'v2xpe_exl', 'v2xcl_rol',
+            'e_v2x_',
+        ]
+        if any(ind.startswith(p) for p in vdem_idx_prefixes):
             return float(np.clip(value, 0, 1))
+
+        # V-Dem ordinal (suffix match, 0-5)
+        if ind.endswith('_ord'):
+            return float(np.clip(value, 0, 5))
+        # V-Dem mean/osp (suffix match, 0-4)
+        if any(ind.endswith(s) for s in ['_mean', '_osp']):
+            return float(np.clip(value, 0, 4))
+
+        # V-Dem latent variables (prefix match, -4 to 4)
+        vdem_latent_prefixes = [
+            'v2el', 'v2pe', 'v2cs', 'v2me', 'v2ju', 'v2lg',
+            'v2cl', 'v2ex', 'v2ca', 'v2dl', 'v2dd', 'v2ed',
+            'v2ps', 'v2sm', 'v2st', 'v2sv', 'v2reg',
+        ]
+        if any(ind.startswith(p) for p in vdem_latent_prefixes):
+            return float(np.clip(value, -4, 4))
+
+        # Polity scores
+        if ind.startswith('e_polity'):
+            return float(np.clip(value, -10, 10))
+
+        # Non-negative quantities (GDP levels, population, trade, etc.)
+        non_neg_prefixes = [
+            'ny.gdp.mktp.cd', 'ny.gdp.mktp.kd', 'ny.gdp.mktp.pp',
+            'ny.gdp.pcap.cd', 'ny.gdp.pcap.kd', 'ny.gdp.pcap.pp',
+            'ny.gnp.mktp', 'ny.gnp.pcap',
+            'nv.agr', 'nv.ind', 'nv.srv',
+            'sp.pop',
+            'bx.gsr.gnfs', 'bm.gsr.gnfs',
+            'ne.con.prvt', 'ne.con.govt',
+            'nw.hca', 'nw.pca', 'nw.tow',
+            'sle.', 'nv.ind.manf',
+        ]
+        if any(ind.startswith(p) for p in non_neg_prefixes):
+            return max(0.0, value)
+
+        # No saturation — ±2σ clamp in propagation handles bounds
         return value
 
 
@@ -150,14 +214,14 @@ def propagate_intervention_v31(
     indicator_percentiles: Optional[Dict[str, float]] = None,
     max_iterations: int = 10,
     convergence_threshold: float = 0.001,
-    dampening_factor: float = 0.5,
-    max_percent_change: float = 100.0,
-    use_nonlinear: bool = True
+    use_nonlinear: bool = True,
+    year: int = 2020,
+    country: Optional[str] = None,
 ) -> dict:
     """
-    Propagate intervention through causal graph.
+    Propagate intervention through causal graph with proper unit conversion.
 
-    Single-run propagation with optional non-linear effects.
+    Uses within-country temporal std for conversion (matches beta estimation).
 
     Args:
         adjacency: Graph adjacency dict from build_adjacency_v31()
@@ -166,9 +230,9 @@ def propagate_intervention_v31(
         indicator_percentiles: {indicator: percentile} for non-linear marginal effects
         max_iterations: Maximum propagation iterations
         convergence_threshold: Stop when max change < this
-        dampening_factor: Scale down cascading effects (0.5 = 50% dampening)
-        max_percent_change: Cap maximum % change from baseline
         use_nonlinear: Use marginal_effects when available
+        year: Year for indicator statistics (std lookup)
+        country: Country name for per-country temporal std lookup
 
     Returns:
         Dict with:
@@ -179,6 +243,23 @@ def propagate_intervention_v31(
         - iterations: Iterations until convergence
         - converged: Whether converged before max_iterations
     """
+    # Load country-specific temporal stats (matches beta estimation scale)
+    if country:
+        country_stats = get_country_indicator_stats(country)
+    else:
+        country_stats = {}
+
+    def _get_std(indicator: str) -> float:
+        """Get correct std for unit conversion."""
+        if country_stats:
+            stat = country_stats.get(indicator, {})
+            temporal_std = stat.get('std', 0.0)
+            if temporal_std > 0:
+                return temporal_std
+        # Fallback: baseline magnitude as scale proxy
+        base_val = abs(baseline_values.get(indicator, 0))
+        return base_val if base_val > 0 else 1.0
+
     # Initialize
     current_values = dict(baseline_values)
     cumulative_deltas = defaultdict(float)
@@ -188,10 +269,13 @@ def propagate_intervention_v31(
     # Apply initial intervention
     changed_nodes = set()
     for indicator, delta in intervention.items():
-        if indicator not in baseline_values:
+        baseline = baseline_values.get(indicator)
+        if baseline is None:
+            # Track delta even without baseline
+            cumulative_deltas[indicator] = delta
+            changed_nodes.add(indicator)
             continue
 
-        baseline = baseline_values[indicator]
         new_val = baseline + delta
         saturated = apply_saturation(indicator, new_val, baseline)
 
@@ -199,7 +283,6 @@ def propagate_intervention_v31(
         cumulative_deltas[indicator] = saturated - baseline
         changed_nodes.add(indicator)
 
-        # Initialize CI bounds
         lower_bound[indicator] = saturated
         upper_bound[indicator] = saturated
 
@@ -208,58 +291,65 @@ def propagate_intervention_v31(
         new_changes = defaultdict(float)
         newly_changed = set()
 
-        # For each changed source, propagate to targets
         for source in changed_nodes:
             source_delta = cumulative_deltas[source]
             if source_delta == 0:
                 continue
 
-            # Get outgoing edges
             edges = adjacency.get(source, [])
+            source_std = _get_std(source)
 
             for edge in edges:
                 target = edge.get('target')
-                if target is None or target not in baseline_values:
+                if target is None:
                     continue
 
-                # Determine effect to use
+                # Determine effect coefficient
                 if use_nonlinear and indicator_percentiles:
                     source_percentile = indicator_percentiles.get(source, 0.5)
-                    effect = get_marginal_effect(edge, current_values.get(source, 0), source_percentile)
+                    beta = get_marginal_effect(edge, current_values.get(source, 0), source_percentile)
                 else:
-                    effect = edge.get('beta', 0)
+                    beta = edge.get('beta', 0)
 
-                # Compute propagated effect with dampening
-                propagated_effect = effect * source_delta * dampening_factor
+                if beta == 0:
+                    continue
+
+                # Unit conversion: standardized beta -> raw units
+                # Using country temporal std (matches beta estimation)
+                target_std = _get_std(target)
+                propagated_effect = beta * (source_delta / source_std) * target_std
+
                 new_changes[target] += propagated_effect
 
         # Apply accumulated changes
         for target, total_effect in new_changes.items():
-            baseline = baseline_values[target]
+            baseline = baseline_values.get(target)
             current_delta = cumulative_deltas[target]
             proposed_delta = current_delta + total_effect
 
-            # Clamp to max percent change
-            max_delta = abs(baseline) * (max_percent_change / 100)
-            clamped_delta = np.clip(proposed_delta, -max_delta, max_delta)
+            # Clamp CUMULATIVE delta to ±2σ of target's historical variance
+            if country_stats:
+                tgt_stat = country_stats.get(target, {})
+                tgt_temporal_std = tgt_stat.get('std', 0.0)
+                if tgt_temporal_std > 0:
+                    max_delta = 2.0 * tgt_temporal_std
+                    proposed_delta = float(np.clip(proposed_delta, -max_delta, max_delta))
 
-            # Compute new value
-            new_val = baseline + clamped_delta
-            saturated = apply_saturation(target, new_val, baseline)
-            actual_delta = saturated - baseline
+            if baseline is not None:
+                new_val = baseline + proposed_delta
+                saturated = apply_saturation(target, new_val, baseline)
+                actual_delta = saturated - baseline
+                current_values[target] = saturated
+                lower_bound[target] = min(lower_bound.get(target, saturated), saturated * 0.95)
+                upper_bound[target] = max(upper_bound.get(target, saturated), saturated * 1.05)
+            else:
+                actual_delta = proposed_delta
 
-            # Check if significant change
             if abs(actual_delta - current_delta) > convergence_threshold:
                 newly_changed.add(target)
 
-            current_values[target] = saturated
             cumulative_deltas[target] = actual_delta
 
-            # Update CI bounds (simple ±5% approximation)
-            lower_bound[target] = min(lower_bound.get(target, saturated), saturated * 0.95)
-            upper_bound[target] = max(upper_bound.get(target, saturated), saturated * 1.05)
-
-        # Check convergence
         if not newly_changed:
             return {
                 'values': dict(current_values),
@@ -272,7 +362,6 @@ def propagate_intervention_v31(
 
         changed_nodes = newly_changed
 
-    # Max iterations reached
     return {
         'values': dict(current_values),
         'deltas': dict(cumulative_deltas),
@@ -379,18 +468,30 @@ def propagate_intervention_ensemble(
 def compute_effects(
     baseline_values: Dict[str, float],
     simulated_values: Dict[str, float],
-    indicators: Optional[List[str]] = None
+    indicators: Optional[List[str]] = None,
+    country_stats: Optional[Dict[str, Dict[str, float]]] = None,
 ) -> Dict[str, dict]:
     """
     Compute effect details for each indicator.
+
+    Handles near-zero baselines safely:
+    - percent_change: raw delta/baseline*100 when |baseline| >= eps, else None
+    - display_percent: always a number, uses eps denominator when baseline ≈ 0
+    - near_zero_baseline: True when raw percent is undefined
+
+    Epsilon is indicator-aware: eps = 0.01 * temporal_std when country_stats
+    are available, else 1e-6. This prevents infinity/huge percent for
+    indicators with near-zero baselines (common for aid flows, binary vars).
 
     Args:
         baseline_values: Original values
         simulated_values: Values after intervention
         indicators: Optional list to filter
+        country_stats: Optional {indicator: {std, mean, ...}} for eps derivation
 
     Returns:
-        {indicator: {baseline, simulated, absolute_change, percent_change}}
+        {indicator: {baseline, simulated, absolute_change, percent_change,
+                     display_percent, near_zero_baseline}}
     """
     effects = {}
 
@@ -404,13 +505,31 @@ def compute_effects(
             continue
 
         abs_change = simulated - baseline
-        pct_change = (abs_change / baseline * 100) if baseline != 0 else 0
+
+        # Determine epsilon for near-zero baseline detection
+        eps = 1e-6
+        if country_stats:
+            stat = country_stats.get(indicator, {})
+            temporal_std = stat.get('std', 0.0)
+            if temporal_std > 0:
+                eps = 0.01 * temporal_std
+
+        near_zero = abs(baseline) < eps
+        if near_zero:
+            # Raw percent is undefined — use epsilon denominator for display
+            pct_change = None
+            display_pct = (abs_change / eps * 100) if abs_change != 0 else 0.0
+        else:
+            pct_change = abs_change / baseline * 100
+            display_pct = pct_change
 
         effects[indicator] = {
             'baseline': baseline,
             'simulated': simulated,
             'absolute_change': abs_change,
-            'percent_change': pct_change
+            'percent_change': pct_change if pct_change is not None else display_pct,
+            'display_percent': display_pct,
+            'near_zero_baseline': near_zero,
         }
 
     return effects
@@ -422,7 +541,6 @@ def propagate_intervention_percentage(
     use_nonlinear: bool = True,
     max_iterations: int = 100,
     convergence_threshold: float = 1e-6,
-    dampening_factor: float = 0.5
 ) -> dict:
     """
     Propagate percentage changes through causal graph.
@@ -430,13 +548,15 @@ def propagate_intervention_percentage(
     No baseline values needed - works entirely in percentages.
     This is the FAST PATH for simulation that avoids loading 65MB panel data.
 
+    Since betas are standardized coefficients (effectively correlations, bounded
+    by [-1, 1]), cascading naturally attenuates without artificial dampening.
+
     Args:
         adjacency: Graph adjacency dict with beta coefficients
         intervention: {indicator_id: change_percent}
         use_nonlinear: Use marginal_effects when available
         max_iterations: Maximum propagation iterations
         convergence_threshold: Stop when max change < this
-        dampening_factor: Scale down cascading effects (0.5 = 50% dampening)
 
     Returns:
         {
@@ -457,7 +577,6 @@ def propagate_intervention_percentage(
             if source_change_pct == 0:
                 continue
 
-            # Get outgoing edges
             edges = adjacency.get(source, [])
 
             for edge in edges:
@@ -465,19 +584,15 @@ def propagate_intervention_percentage(
                 if target is None:
                     continue
 
-                # Get effect coefficient
                 beta = edge.get('beta', 0)
 
-                # Non-linear: use marginal effects if available
                 if use_nonlinear:
                     nonlinearity = edge.get('nonlinearity', {})
                     if nonlinearity.get('detected') and 'marginal_effects' in nonlinearity:
-                        # Use median marginal effect (p50) for percentage propagation
                         beta = nonlinearity['marginal_effects'].get('p50', beta)
 
-                # Propagate percentage through beta with dampening
-                # If source changes by X%, target changes by X% * beta * dampening
-                target_delta = source_change_pct * beta * dampening_factor
+                # Standardized beta: X% change in source -> X% * beta change in target
+                target_delta = source_change_pct * beta
 
                 if target in new_changes:
                     new_changes[target] += target_delta
@@ -616,7 +731,6 @@ def _run_tests():
 
     result = propagate_intervention_v31(
         adjacency, intervention, baseline,
-        dampening_factor=1.0  # No dampening for test
     )
     assert result['converged']
     assert result['deltas']['A'] == 10

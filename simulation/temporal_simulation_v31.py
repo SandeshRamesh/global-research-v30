@@ -3,10 +3,17 @@ V3.1 Temporal Simulation
 
 Multi-year simulation with:
 - Year-specific graph loading for each projection year
-- Lag-aware propagation
+- Lag-aware propagation with proper standardized-to-raw unit conversion
+- Multi-hop propagation within each year (iterative convergence)
 - Dynamic income classification tracking
 - Non-linear effects
 - Optional ensemble uncertainty
+
+Unit conversion note:
+    Our betas are standardized coefficients (fit on z-scored data).
+    A beta of 0.5 means "1 SD increase in X -> 0.5 SD increase in Y".
+    To propagate in raw units:
+        effect_raw = beta * (source_delta / source_std) * target_std
 """
 
 from datetime import datetime
@@ -26,6 +33,7 @@ from .propagation_v31 import (
     apply_saturation
 )
 from .simulation_runner_v31 import load_baseline_values
+from .indicator_stats import get_country_indicator_stats
 
 # Project paths
 V31_ROOT = Path(__file__).parent.parent
@@ -34,6 +42,62 @@ DATA_DIR = V31_ROOT / "data"
 # Constants
 MIN_YEAR = 1990
 MAX_YEAR = 2024
+
+# Clamp propagated effects to ±MAX_SIGMA_CLAMP temporal standard deviations.
+# Effects beyond this threshold are outside the model's training distribution
+# and should not be presented as confident predictions. 2σ covers ~95% of
+# historically observed within-country variance for each indicator.
+MAX_SIGMA_CLAMP = 2.0
+
+
+def _clamp_to_sigma(
+    raw_increment: float,
+    indicator: str,
+    country_stats: Dict[str, Dict[str, float]],
+) -> float:
+    """
+    Clamp propagated raw increment to ±MAX_SIGMA_CLAMP * temporal_std.
+
+    Any effect larger than 2σ of what the indicator has historically done
+    within this country is outside the model's training distribution.
+    """
+    stat = country_stats.get(indicator, {})
+    temporal_std = stat.get('std', 0.0)
+    if temporal_std <= 0:
+        return raw_increment  # No stats → can't clamp
+    max_delta = MAX_SIGMA_CLAMP * temporal_std
+    return float(np.clip(raw_increment, -max_delta, max_delta))
+
+
+def _get_indicator_std(
+    indicator: str,
+    country_stats: Dict[str, Dict[str, float]],
+    baseline_values: Optional[Dict[str, float]] = None
+) -> float:
+    """
+    Get the correct std for unit conversion of a country-specific beta.
+
+    Priority:
+    1. Country temporal std (matches how betas were estimated)
+    2. Absolute baseline value as scale proxy (for indicators missing from panel)
+    3. 1.0 as last resort (effectively passes through raw beta)
+
+    NEVER use cross-country std — it's 1000-5000x larger than within-country
+    temporal std for developing countries, causing massive amplification.
+    """
+    stat = country_stats.get(indicator, {})
+    temporal_std = stat.get('std', 0.0)
+    if temporal_std > 0:
+        return temporal_std
+
+    # Fallback: use baseline value magnitude as scale proxy
+    if baseline_values:
+        base_val = abs(baseline_values.get(indicator, 0))
+        if base_val > 0:
+            return base_val
+
+    return 1.0
+
 
 # Type definitions
 ViewType = Literal['country', 'stratified', 'unified']
@@ -49,18 +113,19 @@ def propagate_temporal_v31(
     p_value_threshold: float = 0.05,
     use_nonlinear: bool = True,
     use_dynamic_graphs: bool = True,
-    dampening_factor: float = 0.5,
-    max_percent_change: float = 100.0,
-    interventions_by_year: Optional[Dict[int, Dict[str, float]]] = None
+    interventions_by_year: Optional[Dict[int, Dict[str, float]]] = None,
+    max_iterations_per_year: int = 10,
+    convergence_threshold: float = 0.001,
+    debug: bool = False,
 ) -> dict:
     """
     Propagate intervention across multiple years using year-specific graphs.
 
-    Key difference from instant simulation: loads a new graph for each
-    projection year, accounting for evolving causal relationships.
+    Uses proper unit conversion for standardized betas:
+        effect_raw = beta * (source_delta / source_std) * target_std
 
-    Supports staggered interventions: different indicators can be intervened
-    at different years via interventions_by_year.
+    Within each year, iterates multi-hop until convergence (like instant
+    simulation) so effects cascade through the full graph, not just one hop.
 
     Args:
         country: Country name
@@ -72,9 +137,9 @@ def propagate_temporal_v31(
         p_value_threshold: Edge significance filter
         use_nonlinear: Use marginal effects
         use_dynamic_graphs: Load year-specific graph for each year
-        dampening_factor: Effect dampening
-        max_percent_change: Maximum change cap
         interventions_by_year: {year: {indicator: absolute_delta}} — staggered interventions
+        max_iterations_per_year: Max multi-hop iterations within each year
+        convergence_threshold: Stop iterating when max delta change < this
 
     Returns:
         Dict with:
@@ -87,6 +152,15 @@ def propagate_temporal_v31(
     deltas_timeline = {}
     graphs_used = {}
     converged_years = []
+    warnings = []
+    convergence_info = {}  # {year: {iterations, max_update, l1_norm}}
+
+    # Debug trace: saturation/clamp events (only collected when debug=True)
+    debug_trace = {
+        'saturation_events': [],
+        'clamp_events': [],
+        'graph_fallbacks': [],
+    } if debug else None
 
     # Build interventions_by_year from legacy param if not provided
     if interventions_by_year is None:
@@ -95,20 +169,152 @@ def propagate_temporal_v31(
             interventions_by_year[base_year] = intervention
 
     # Initialize year 0 (base year)
-    current_values = dict(baseline_values)
+    current_values = dict(baseline_values) if baseline_values else {}
     current_deltas = defaultdict(float)
 
     # Apply interventions scheduled for the base year
     if base_year in interventions_by_year:
         for indicator, delta in interventions_by_year[base_year].items():
-            if indicator not in baseline_values:
-                continue
-            base = baseline_values[indicator]
-            new_val = base + delta
-            saturated = apply_saturation(indicator, new_val, base)
-            current_values[indicator] = saturated
-            current_deltas[indicator] = saturated - base
+            base = baseline_values.get(indicator) if baseline_values else None
+            if base is not None:
+                new_val = base + delta
+                saturated = apply_saturation(indicator, new_val, base)
+                if debug_trace and saturated != new_val:
+                    debug_trace['saturation_events'].append({
+                        'year': base_year, 'indicator': indicator,
+                        'proposed': new_val, 'clamped_to': saturated,
+                        'baseline': base, 'source': 'intervention',
+                    })
+                current_values[indicator] = saturated
+                current_deltas[indicator] = saturated - base
+            else:
+                # No baseline — record raw delta, track the indicator
+                current_deltas[indicator] = delta
 
+    timeline[base_year] = dict(current_values)
+    deltas_timeline[base_year] = dict(current_deltas)
+
+    # Track incremental changes per year in STANDARDIZED units.
+    # Betas are within-country standardized coefficients:
+    #   target_delta_std = beta * source_delta_std
+    # We convert: intervention raw -> std at entry, std -> raw at exit.
+    # Use the COUNTRY'S OWN temporal std (not cross-country std).
+    increments_std_timeline: Dict[int, Dict[str, float]] = {}
+
+    # Load country-specific temporal stats (matches beta estimation scale)
+    country_stats = get_country_indicator_stats(country)
+
+    # Convert base year deltas to standardized units
+    base_increments_std = {}
+    for ind, delta in current_deltas.items():
+        ind_std = _get_indicator_std(ind, country_stats, baseline_values)
+        base_increments_std[ind] = delta / ind_std
+
+    # ---- Multi-hop propagation for base year (lag=0 edges) ----
+    # Without this, lag=0 edges from base-year interventions are never processed
+    # because the year loop starts at offset=1.
+    if base_increments_std:
+        graph_year_base = min(MAX_YEAR, base_year)
+        base_graph = load_temporal_graph(
+            country=country,
+            year=graph_year_base,
+            view_type=view_type,
+            p_value_threshold=p_value_threshold
+        )
+        if base_graph is not None:
+            base_adj = build_adjacency_v31(base_graph)
+            view_used = base_graph.get('view_used', view_type)
+            graphs_used[base_year] = view_used
+            if view_used != view_type:
+                msg = f"Year {base_year}: requested '{view_type}', fell back to '{view_used}'"
+                warnings.append(msg)
+                if debug_trace:
+                    debug_trace['graph_fallbacks'].append({
+                        'year': base_year, 'requested': view_type,
+                        'used': view_used,
+                    })
+
+            # Warn if intervention indicators have no outgoing edges in this year's graph
+            for ind in base_increments_std:
+                if ind in (interventions_by_year.get(base_year, {})):
+                    out_edges = base_adj.get(ind, [])
+                    if len(out_edges) == 0:
+                        warnings.append(
+                            f"'{ind}' has no outgoing causal edges in the {graph_year_base} "
+                            f"temporal graph. Try a later base year (this indicator may not "
+                            f"have been measured or connected in {graph_year_base})."
+                        )
+
+            changed_nodes_base = set(base_increments_std.keys())
+            for _iter in range(max_iterations_per_year):
+                new_impulses = defaultdict(float)
+                for source in changed_nodes_base:
+                    inc_std = base_increments_std.get(source, 0)
+                    if inc_std == 0:
+                        continue
+                    for edge in base_adj.get(source, []):
+                        target = edge.get('target')
+                        if target is None:
+                            continue
+                        if edge.get('lag', 1) > 0:
+                            continue  # Only lag=0 for same-year multi-hop
+                        beta = edge.get('beta', 0)
+                        if use_nonlinear and edge.get('marginal_effects'):
+                            beta = edge['marginal_effects'].get('p50', beta)
+                        if beta == 0:
+                            continue
+                        new_impulses[target] += beta * inc_std
+
+                if not new_impulses:
+                    break
+                newly_changed = set()
+                for target, effect_std in new_impulses.items():
+                    if abs(effect_std) > convergence_threshold:
+                        base_increments_std[target] = base_increments_std.get(target, 0) + effect_std
+                        newly_changed.add(target)
+                if not newly_changed:
+                    break
+                changed_nodes_base = newly_changed
+
+            # Convert new standardized increments to raw and apply
+            for indicator, inc_std in base_increments_std.items():
+                if indicator in current_deltas and current_deltas[indicator] != 0:
+                    # Already applied as direct intervention — skip re-application
+                    # but keep the std increment for lagged propagation
+                    continue
+                if inc_std == 0:
+                    continue
+                tgt_std = _get_indicator_std(indicator, country_stats, baseline_values)
+                raw_delta = inc_std * tgt_std
+                raw_delta_pre_clamp = raw_delta
+                raw_delta = _clamp_to_sigma(raw_delta, indicator, country_stats)
+                if debug_trace and raw_delta != raw_delta_pre_clamp:
+                    debug_trace['clamp_events'].append({
+                        'year': base_year, 'indicator': indicator,
+                        'pre_clamp': raw_delta_pre_clamp, 'post_clamp': raw_delta,
+                        'source': 'base_year_multihop',
+                    })
+                base = baseline_values.get(indicator) if baseline_values else None
+                if base is not None:
+                    new_val = base + raw_delta
+                    saturated = apply_saturation(indicator, new_val, base)
+                    if debug_trace and saturated != new_val:
+                        debug_trace['saturation_events'].append({
+                            'year': base_year, 'indicator': indicator,
+                            'proposed': new_val, 'clamped_to': saturated,
+                            'baseline': base, 'source': 'base_year_multihop',
+                        })
+                    actual_delta = saturated - base
+                    current_values[indicator] = saturated
+                    current_deltas[indicator] = actual_delta
+                    # Update the std increment to reflect saturation
+                    if tgt_std > 0:
+                        base_increments_std[indicator] = actual_delta / tgt_std
+                else:
+                    current_deltas[indicator] = raw_delta
+
+    increments_std_timeline[base_year] = base_increments_std
+    # Update base year timeline with multi-hop effects
     timeline[base_year] = dict(current_values)
     deltas_timeline[base_year] = dict(current_deltas)
 
@@ -128,7 +334,6 @@ def propagate_temporal_v31(
                 p_value_threshold=p_value_threshold
             )
         else:
-            # Use base year graph for all years (V3.0 style)
             graph = load_temporal_graph(
                 country=country,
                 year=base_year,
@@ -137,100 +342,212 @@ def propagate_temporal_v31(
             )
 
         if graph is None:
-            # Use previous year's values if no graph
             timeline[actual_year] = dict(current_values)
             deltas_timeline[actual_year] = dict(current_deltas)
+            increments_std_timeline[actual_year] = {}
             graphs_used[actual_year] = 'none'
+            warnings.append(f"Year {actual_year}: no graph available")
             continue
 
-        graphs_used[actual_year] = graph.get('view_used', view_type)
-
-        # Build adjacency for this year
+        view_used = graph.get('view_used', view_type)
+        graphs_used[actual_year] = view_used
+        if view_used != view_type:
+            msg = f"Year {actual_year}: requested '{view_type}', fell back to '{view_used}'"
+            warnings.append(msg)
+            if debug_trace:
+                debug_trace['graph_fallbacks'].append({
+                    'year': actual_year, 'requested': view_type,
+                    'used': view_used,
+                })
         adjacency = build_adjacency_v31(graph)
+
+        # Year's increments in standardized units
+        year_increments_std = defaultdict(float)
 
         # Inject any staggered interventions scheduled for this year
         if actual_year in interventions_by_year:
             for indicator, delta in interventions_by_year[actual_year].items():
-                if indicator not in baseline_values:
-                    continue
-                base = baseline_values[indicator]
-                new_val = base + delta
-                saturated = apply_saturation(indicator, new_val, base)
-                current_values[indicator] = saturated
-                current_deltas[indicator] = saturated - base
+                base = baseline_values.get(indicator) if baseline_values else None
+                if base is not None:
+                    new_val = base + delta
+                    saturated = apply_saturation(indicator, new_val, base)
+                    new_delta = saturated - base
+                    raw_increment = new_delta - current_deltas.get(indicator, 0)
+                    current_values[indicator] = saturated
+                    current_deltas[indicator] = new_delta
+                else:
+                    raw_increment = delta - current_deltas.get(indicator, 0)
+                    current_deltas[indicator] = delta
 
-        # Compute effects for this year based on lagged changes
-        new_deltas = defaultdict(float, current_deltas)
-        changed_this_year = set()
+                ind_std = _get_indicator_std(indicator, country_stats, baseline_values)
+                year_increments_std[indicator] += raw_increment / ind_std
 
-        # For each edge, check if source effect from (year - lag) should apply
+        # ---- Collect lagged impulses arriving this year ----
+        # Use STANDARDIZED incremental changes from the source year.
         for source, edges in adjacency.items():
             for edge in edges:
                 target = edge.get('target')
-                lag = edge.get('lag', 1)  # Default lag of 1 year
-
-                # Check if we're at the right year for this lagged effect
-                source_year = actual_year - lag
-                if source_year < base_year:
-                    continue  # Lag hasn't elapsed yet
-
-                # Get source delta from the lagged year
-                source_delta = deltas_timeline.get(source_year, {}).get(source, 0)
-                if source_delta == 0:
+                if target is None:
                     continue
 
-                # Get effect (use marginal effects if non-linear)
+                lag = edge.get('lag', 1)
+                source_year = actual_year - lag
+                if source_year < base_year:
+                    continue
+
+                # Standardized increment from the lagged year
+                source_inc_std = increments_std_timeline.get(source_year, {}).get(source, 0)
+                if source_inc_std == 0:
+                    continue
+
                 if use_nonlinear and edge.get('marginal_effects'):
-                    # Simple: use p50 marginal effect
-                    effect = edge['marginal_effects'].get('p50', edge.get('beta', 0))
+                    beta = edge['marginal_effects'].get('p50', edge.get('beta', 0))
                 else:
-                    effect = edge.get('beta', 0)
+                    beta = edge.get('beta', 0)
 
-                # Compute propagated effect
-                propagated = effect * source_delta * dampening_factor
+                if beta == 0:
+                    continue
 
-                # Accumulate
-                if target in baseline_values:
-                    new_deltas[target] += propagated
-                    changed_this_year.add(target)
+                # In standardized space: target_delta_std = beta * source_delta_std
+                # Betas naturally attenuate (|beta| < 1 typically), so propagation
+                # is safe even for indicators missing from panel stats.
+                year_increments_std[target] += beta * source_inc_std
 
-        # Apply saturation and update current values
+        if not year_increments_std:
+            timeline[actual_year] = dict(current_values)
+            deltas_timeline[actual_year] = dict(current_deltas)
+            increments_std_timeline[actual_year] = {}
+            converged_years.append(actual_year)
+            convergence_info[actual_year] = {'iterations': 0, 'max_update': 0.0, 'l1_norm': 0.0}
+            continue
+
+        # ---- Multi-hop within this year (lag=0 edges) ----
+        changed_nodes = set(year_increments_std.keys())
+        year_iterations = 0
+        year_max_update = 0.0
+        year_l1_norm = 0.0
+
+        for iteration in range(1, max_iterations_per_year):
+            new_impulses_std = defaultdict(float)
+            for source in changed_nodes:
+                inc_std = year_increments_std.get(source, 0)
+                if inc_std == 0:
+                    continue
+
+                for edge in adjacency.get(source, []):
+                    target = edge.get('target')
+                    if target is None:
+                        continue
+                    if edge.get('lag', 1) > 0:
+                        continue  # Only same-year edges for multi-hop
+
+                    if use_nonlinear and edge.get('marginal_effects'):
+                        beta = edge['marginal_effects'].get('p50', edge.get('beta', 0))
+                    else:
+                        beta = edge.get('beta', 0)
+
+                    if beta == 0:
+                        continue
+
+                    new_impulses_std[target] += beta * inc_std
+
+            if not new_impulses_std:
+                year_iterations = iteration
+                break
+
+            max_change = 0.0
+            l1_norm = 0.0
+            newly_changed = set()
+            for target, effect_std in new_impulses_std.items():
+                l1_norm += abs(effect_std)
+                if abs(effect_std) > convergence_threshold:
+                    year_increments_std[target] = year_increments_std.get(target, 0) + effect_std
+                    newly_changed.add(target)
+                    max_change = max(max_change, abs(effect_std))
+
+            year_iterations = iteration
+            year_max_update = max_change
+            year_l1_norm = l1_norm
+
+            if max_change < convergence_threshold or not newly_changed:
+                break
+            changed_nodes = newly_changed
+
+        convergence_info[actual_year] = {
+            'iterations': year_iterations,
+            'max_update': round(year_max_update, 6),
+            'l1_norm': round(year_l1_norm, 6),
+        }
+
+        # ---- Convert standardized increments to raw and apply ----
         converged = True
-        for indicator in new_deltas:
-            if indicator not in baseline_values:
+        year_increments_std_final = {}
+
+        for indicator, inc_std in year_increments_std.items():
+            if inc_std == 0:
                 continue
 
-            base = baseline_values[indicator]
-            proposed_delta = new_deltas[indicator]
+            # Convert from standardized to raw using country temporal std
+            tgt_std = _get_indicator_std(indicator, country_stats, baseline_values)
+            raw_increment = inc_std * tgt_std
 
-            # Clamp
-            max_delta = abs(base) * (max_percent_change / 100)
-            clamped_delta = np.clip(proposed_delta, -max_delta, max_delta)
-
-            new_val = base + clamped_delta
-            saturated = apply_saturation(indicator, new_val, base)
-            actual_delta = saturated - base
-
-            # Check for significant change
             old_delta = current_deltas.get(indicator, 0)
-            if abs(actual_delta - old_delta) > 0.001:
+            proposed_delta = old_delta + raw_increment
+
+            # Clamp CUMULATIVE delta to ±2σ of target's historical variance.
+            # Effects beyond 2σ are outside the model's training distribution.
+            proposed_delta_pre_clamp = proposed_delta
+            proposed_delta = _clamp_to_sigma(proposed_delta, indicator, country_stats)
+            if debug_trace and proposed_delta != proposed_delta_pre_clamp:
+                debug_trace['clamp_events'].append({
+                    'year': actual_year, 'indicator': indicator,
+                    'pre_clamp': round(proposed_delta_pre_clamp, 6),
+                    'post_clamp': round(proposed_delta, 6),
+                    'source': 'yearly_propagation',
+                })
+
+            base = baseline_values.get(indicator) if baseline_values else None
+            if base is not None:
+                new_val = base + proposed_delta
+                saturated = apply_saturation(indicator, new_val, base)
+                if debug_trace and saturated != new_val:
+                    debug_trace['saturation_events'].append({
+                        'year': actual_year, 'indicator': indicator,
+                        'proposed': round(new_val, 6), 'clamped_to': round(saturated, 6),
+                        'baseline': base, 'source': 'yearly_propagation',
+                    })
+                actual_delta = saturated - base
+                current_values[indicator] = saturated
+            else:
+                actual_delta = proposed_delta
+
+            if abs(actual_delta - old_delta) > convergence_threshold:
                 converged = False
 
-            current_values[indicator] = saturated
             current_deltas[indicator] = actual_delta
+
+            # Record the actual standardized increment (may differ due to saturation)
+            actual_raw_increment = actual_delta - old_delta
+            year_increments_std_final[indicator] = actual_raw_increment / tgt_std
 
         if converged:
             converged_years.append(actual_year)
 
         timeline[actual_year] = dict(current_values)
         deltas_timeline[actual_year] = dict(current_deltas)
+        increments_std_timeline[actual_year] = year_increments_std_final
 
-    return {
+    result = {
         'timeline': timeline,
         'deltas': deltas_timeline,
         'graphs_used': graphs_used,
-        'converged_years': converged_years
+        'converged_years': converged_years,
+        'warnings': warnings if warnings else None,
+        'convergence_info': convergence_info,
     }
+    if debug_trace is not None:
+        result['debug_trace'] = debug_trace
+    return result
 
 
 def run_temporal_simulation_v31(
@@ -245,7 +562,8 @@ def run_temporal_simulation_v31(
     n_ensemble_runs: int = 0,
     include_spillovers: bool = True,
     top_n_effects: int = 20,
-    panel_path: Optional[Path] = None
+    panel_path: Optional[Path] = None,
+    debug: bool = False
 ) -> dict:
     """
     Run temporal simulation with year-by-year graphs.
@@ -321,7 +639,7 @@ def run_temporal_simulation_v31(
         # Ensure horizon covers from earliest intervention to latest + horizon_years
         effective_horizon = max(horizon_years, (max_intervention_year - effective_base_year) + horizon_years)
 
-        # Run temporal propagation
+        # Run temporal propagation (proper unit conversion, no arbitrary dampening)
         result = propagate_temporal_v31(
             country=country,
             baseline_values=baseline,
@@ -331,15 +649,19 @@ def run_temporal_simulation_v31(
             p_value_threshold=p_value_threshold,
             use_nonlinear=use_nonlinear,
             use_dynamic_graphs=use_dynamic_graphs,
-            interventions_by_year=dict(interventions_by_year)
+            interventions_by_year=dict(interventions_by_year),
+            debug=debug,
         )
 
-        # Compute effects for each year
+        # Load country stats for display-safe percent computation
+        country_stats = get_country_indicator_stats(country)
+
+        # Compute effects for each year (with near-zero baseline handling)
         effects_by_year = {}
         affected_per_year = {}
 
         for year, values in result['timeline'].items():
-            year_effects = compute_effects(baseline, values)
+            year_effects = compute_effects(baseline, values, country_stats=country_stats)
             top = get_top_effects(year_effects, top_n=top_n_effects)
             effects_by_year[year] = top
             affected_per_year[year] = len([e for e in year_effects.values()
@@ -349,6 +671,70 @@ def run_temporal_simulation_v31(
         income_evolution = {}
         for year in result['timeline'].keys():
             income_evolution[year] = get_country_classification(country, year) or {}
+
+        # ---- Risk flags & stress scoring ----
+        risk_flags = []
+        warnings = list(result.get('warnings') or [])
+
+        # Check intervention magnitudes
+        for intv in intervention_details:
+            if intv.get('status') != 'applied':
+                continue
+            pct = abs(intv.get('change_percent', 0))
+            if pct > 500:
+                risk_flags.append('extreme_shock')
+                warnings.append(
+                    f"Intervention on '{intv['indicator']}' at {intv['change_percent']:+.0f}% "
+                    f"is extreme (>500%). Results are extrapolation beyond training data."
+                )
+            elif pct > 200:
+                risk_flags.append('large_shock')
+                warnings.append(
+                    f"Intervention on '{intv['indicator']}' at {intv['change_percent']:+.0f}% "
+                    f"is large (>200%). Interpret with caution."
+                )
+
+        # Check horizon
+        if effective_horizon > 15:
+            risk_flags.append('long_horizon')
+            warnings.append(
+                f"Projection horizon of {effective_horizon} years is long. "
+                f"Uncertainty compounds; later years are less reliable."
+            )
+
+        # Multiple interventions compound
+        applied_count = sum(1 for i in intervention_details if i.get('status') == 'applied')
+        if applied_count >= 3:
+            risk_flags.append('multiple_interventions')
+
+        # Stress score: fraction of final-year effects that hit saturation or ±2σ clamp
+        final_year = effective_base_year + effective_horizon
+        final_effects = effects_by_year.get(final_year, {})
+        n_clamped = 0
+        n_total = len(final_effects)
+        for ind, eff in final_effects.items():
+            base = eff.get('baseline', 0)
+            sim = eff.get('simulated', 0)
+            if base is None or sim is None:
+                continue
+            # Check if simulated value is at saturation boundary
+            sat_val = apply_saturation(ind, sim, base)
+            if sat_val != sim:
+                n_clamped += 1
+                continue
+            # Check if delta is at ±2σ clamp
+            stat = country_stats.get(ind, {})
+            std = stat.get('std', 0.0)
+            if std > 0:
+                delta = abs(sim - base)
+                if delta >= (MAX_SIGMA_CLAMP * std * 0.99):  # within 1% of clamp
+                    n_clamped += 1
+        if n_clamped > 0:
+            risk_flags.append('near_clamp_saturation')
+        stress_score = n_clamped / n_total if n_total > 0 else 0.0
+
+        # Deduplicate risk flags
+        risk_flags = list(dict.fromkeys(risk_flags))
 
         # Build response
         response = {
@@ -363,14 +749,28 @@ def run_temporal_simulation_v31(
             'affected_per_year': affected_per_year,
             'graphs_used': result['graphs_used'],
             'income_classification_evolution': income_evolution,
+            'risk_flags': risk_flags if risk_flags else None,
+            'simulation_stress_score': round(stress_score, 3),
             'metadata': {
+                'version': 'v3.1.2',
+                'engine': 'temporal_propagation_v31',
+                'intervention_persistence': 'step',
                 'p_value_threshold': p_value_threshold,
                 'use_nonlinear': use_nonlinear,
                 'use_dynamic_graphs': use_dynamic_graphs,
                 'converged_years': result['converged_years'],
+                'convergence_info': result.get('convergence_info', {}),
                 'timestamp': datetime.now().isoformat()
             }
         }
+
+        # Include all warnings (graph fallbacks + risk + stress)
+        if warnings:
+            response['warnings'] = warnings
+
+        # Include debug trace when requested
+        if result.get('debug_trace'):
+            response['debug_trace'] = result['debug_trace']
 
         # Add spillovers for final year if enabled
         if include_spillovers:
