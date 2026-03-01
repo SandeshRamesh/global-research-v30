@@ -8,6 +8,23 @@
 **Completion Date:** 2026-01-15
 **Total Output Files:** 9,926 files
 
+### 2026-03-01 Addendum: Regional Runtime Integration
+
+- Added canonical hybrid region mapping module in `viz/simulation/region_mapping.py` with strict 178/178 coverage checks.
+- Added `regional` scope in graph loader + simulation runtime (`country|stratified|unified|regional`).
+- Added adaptive-year fallback behavior with warnings (nearest available year by scope).
+- Added regional precompute jobs:
+  - `viz/simulation/precompute_regional_graphs.py`
+  - `viz/simulation/precompute_regional_baselines.py`
+  - `viz/simulation/precompute_regional_stats.py`
+  - `viz/simulation/precompute_regional_shap.py`
+- Hardened regional graph aggregation:
+  - edge-country coverage filtering (default 30% support, abs floor=2),
+  - nonlinearity schema parity (`nonlinearity` + `marginal_effects` retained),
+  - metadata coverage diagnostics per region-year.
+- Enabled North America artifact generation with region-specific minimum contributor override.
+- Added baseline-cache fallback for regional indicator stats so temporal regional absolute mode remains calibrated without parquet runtime dependencies.
+
 ---
 
 ## Final Results Summary
